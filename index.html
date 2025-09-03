@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agronoré | Asesoría Agrícola Especializada para la Agricultura Moderna</title>
+    <meta name="description"
+        content="Transforma tu cosecha con Agronoré. Aumenta tus cosechas hasta un 40% con nuestros planes personalizados de agricultura de precisión. ¡Contáctanos y descubre cómo!" />
+
+    <!-- Favicon Personalizado -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%2316a34a%22><path d=%22M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66C7.62 17.11 9.87 12 17 10V8z%22/><path d=%22M17 8c0-2.21-1.79-4-4-4s-4 1.79-4 4c0 .74.2 1.42.54 2.02.85 1.5 2.13 2.87 3.56 4.02L17 10.8V8z%22/></svg>" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a', // Verde principal
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#18181b', // Un negro más suave
+                            800: '#27272a'
+                        },
+                        secondary: {
+                            500: '#f59e0b' // Naranja/ámbar
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #374151;
+            /* gray-700 */
+            background-color: #f9fafb;
+            /* gray-50 */
+            scroll-behavior: smooth;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #16a34a;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 80%;
+            display: block;
+            margin: auto;
+            border-radius: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-caption {
+            margin-top: 1rem;
+            color: white;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 2.5rem;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .close-btn:hover {
+            color: #ccc;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .input-focus:focus {
+            box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.3);
+            border-color: #16a34a;
+        }
+
+        .whatsapp-float {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 12px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        .counter {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #16a34a;
+            line-height: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <!-- Encabezado Fijo -->
+    <header id="header" class="sticky top-0 z-50 bg-white border-b border-gray-100 transition-shadow duration-300">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="block">
+                    <img src="https://placehold.co/180x40/FFFFFF/1A2E05?text=AGRONOR%C3%89&font=poppins"
+                        alt="Logo de Agronoré" class="h-10 w-auto">
+                </a>
+
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#inicio" class="nav-link active font-medium text-primary-600">Inicio</a>
+                    <a href="#acerca-de" class="nav-link font-medium hover:text-primary-600">Acerca De</a>
+                    <a href="#metodologia" class="nav-link font-medium hover:text-primary-600">Cómo Funciona</a>
+                    <a href="#servicios" class="nav-link font-medium hover:text-primary-600">Servicios</a>
+                    <a href="#testimonios" class="nav-link font-medium hover:text-primary-600">Testimonios</a>
+                </nav>
+
+                <div class="hidden md:flex">
+                    <a href="#contacto"
+                        class="border-2 border-gray-900 text-gray-900 px-6 py-2 rounded-md font-bold hover:bg-gray-900 hover:text-white transition-colors">
+                        CONTACTO
+                    </a>
+                </div>
+
+                <button id="menu-button" class="md:hidden text-gray-800 text-2xl p-2 z-50">
+                    <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú móvil -->
+    <div id="mobile-menu"
+        class="mobile-menu fixed top-0 right-0 w-full h-full bg-white z-40 p-6 flex flex-col justify-center items-center">
+        <nav class="flex flex-col space-y-8 text-center">
+            <a href="#inicio" class="text-gray-800 text-2xl py-2 font-medium">Inicio</a>
+            <a href="#acerca-de" class="text-gray-800 text-2xl py-2 font-medium">Acerca De</a>
+            <a href="#metodologia" class="text-gray-800 text-2xl py-2 font-medium">Cómo Funciona</a>
+            <a href="#servicios" class="text-gray-800 text-2xl py-2 font-medium">Servicios</a>
+            <a href="#testimonios" class="text-gray-800 text-2xl py-2 font-medium">Testimonios</a>
+            <div class="pt-8">
+                <a href="#contacto"
+                    class="bg-primary-600 text-white px-8 py-4 rounded-lg font-bold text-lg">CONTACTO</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="relative bg-white pt-10 pb-20 md:pt-20 md:pb-28">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?auto=format&fit=crop&w=1920&q=80"
+                alt="Fondo de campo agrícola con mano sosteniendo una planta"
+                class="w-full h-full object-cover opacity-10">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll">
+                    <span class="text-primary-600 font-bold tracking-widest">TRANSFORMA TU COSECHA</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-dark-900 my-4 leading-tight">
+                        Asesoría agrícola especializada
+                    </h1>
+                    <p class="text-lg text-gray-600 max-w-lg">
+                        Aumenta tus cosechas hasta un 40% con nuestros planes personalizados. ¡Contáctanos y descubre
+                        cómo!
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-2xl animate-on-scroll delay-100">
+                    <h3 class="text-2xl font-bold text-center mb-6">Solicita un diagnóstico gratis</h3>
+                    <form action="https://formspree.io/f/movnpqzn" method="POST" class="space-y-5">
+                        <div>
+                            <label for="hero-nombre"
+                                class="block text-sm font-medium text-gray-700 sr-only">Nombre</label>
+                            <input id="hero-nombre" name="nombre" type="text" required
+                                placeholder="Introduce tu nombre..."
+                                class="w-full px-4 py-3 bg-gray-100 rounded-md border-gray-200 focus:outline-none focus:ring-2 input-focus">
+                        </div>
+                        <div>
+                            <label for="hero-email" class="block text-sm font-medium text-gray-700 sr-only">Correo
+                                electrónico</label>
+                            <input id="hero-email" name="email" type="email" required
+                                placeholder="Introduce tu dirección de correo electrónico..."
+                                class="w-full px-4 py-3 bg-gray-100 rounded-md border-gray-200 focus:outline-none focus:ring-2 input-focus">
+                        </div>
+                        <div>
+                            <label for="hero-telefono"
+                                class="block text-sm font-medium text-gray-700 sr-only">Teléfono</label>
+                            <input id="hero-telefono" name="telefono" type="tel" required
+                                placeholder="Introduce tu número de teléfono..."
+                                class="w-full px-4 py-3 bg-gray-100 rounded-md border-gray-200 focus:outline-none focus:ring-2 input-focus">
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-primary-600 text-white px-6 py-4 rounded-md font-bold text-lg shadow-md hover:bg-primary-700 transition-colors tracking-wider">
+                            ENTREGAR
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Acerca de Nosotros -->
+    <section id="acerca-de" class="py-20 md:py-28 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <span class="text-primary-600 font-semibold tracking-wider">SOBRE NOSOTROS</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Tu Aliado en Agricultura de Precisión
+                </h2>
+                <p class="text-lg text-gray-600">
+                    En Agronoré, fusionamos más de 7 años de experiencia con un enfoque científico para ofrecerte
+                    soluciones que realmente funcionan. Nuestra misión es ser tu socio de confianza, brindándote la
+                    asesoría y los productos necesarios para que alcances una producción rentable y sostenible.
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1579524698539-3d10b61405e5?auto=format&fit=crop&w=800&q=80"
+                        alt="Agrónomo revisando un cultivo" class="rounded-xl shadow-lg">
+                </div>
+                <div class="animate-on-scroll delay-100">
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nuestra Misión</h3>
+                            <p class="text-gray-600">Empoderar a los agricultores con las herramientas, el conocimiento
+                                y los productos de la más alta calidad para que superen sus metas de producción de
+                                manera sostenible y rentable.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nuestra Visión</h3>
+                            <p class="text-gray-600">Ser líderes en la transformación del sector agrícola en México,
+                                impulsando una nueva era de agricultura inteligente, eficiente y respetuosa con el medio
+                                ambiente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Resultados Comprobados -->
+    <section id="resultados" class="py-20 bg-dark-800 text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="animate-on-scroll">
+                    <div class="counter text-primary-400" data-target="40">0</div>
+                    <p class="text-lg text-gray-300 mt-2">Aumento promedio en producción (%)</p>
+                </div>
+                <div class="animate-on-scroll delay-100">
+                    <div class="counter text-primary-400" data-target="150">0</div>
+                    <p class="text-lg text-gray-300 mt-2">Productores Satisfechos</p>
+                </div>
+                <div class="animate-on-scroll delay-200">
+                    <div class="counter text-primary-400" data-target="7">0</div>
+                    <p class="text-lg text-gray-300 mt-2">Años de Experiencia en el Sector</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Metodología -->
+    <section id="metodologia" class="py-20 md:py-28 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <span class="text-primary-600 font-semibold tracking-wider">CÓMO FUNCIONA</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Nuestra Metodología de Éxito</h2>
+                <p class="text-lg text-gray-600">Seguimos un proceso probado para garantizar los mejores resultados para
+                    tu cultivo.</p>
+            </div>
+            <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-x-8 gap-y-12">
+                <!-- Paso 1 -->
+                <div class="text-center animate-on-scroll">
+                    <div class="relative inline-block">
+                        <div
+                            class="bg-primary-100 text-primary-600 p-5 rounded-full w-24 h-24 flex items-center justify-center mb-4 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="absolute -top-2 -right-2 bg-primary-600 text-white font-bold rounded-full h-8 w-8 flex items-center justify-center">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Diagnóstico y Análisis</h3>
+                    <p class="text-gray-600">Realizamos un análisis exhaustivo de tu suelo, agua y cultivo para
+                        identificar áreas de oportunidad.</p>
+                </div>
+                <!-- Paso 2 -->
+                <div class="text-center animate-on-scroll delay-100">
+                    <div class="relative inline-block">
+                        <div
+                            class="bg-primary-100 text-primary-600 p-5 rounded-full w-24 h-24 flex items-center justify-center mb-4 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="absolute -top-2 -right-2 bg-primary-600 text-white font-bold rounded-full h-8 w-8 flex items-center justify-center">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Plan Personalizado</h3>
+                    <p class="text-gray-600">Diseñamos un plan de nutrición y manejo específico para tus necesidades,
+                        optimizando recursos.</p>
+                </div>
+                <!-- Paso 3 -->
+                <div class="text-center animate-on-scroll delay-200">
+                    <div class="relative inline-block">
+                        <div
+                            class="bg-primary-100 text-primary-600 p-5 rounded-full w-24 h-24 flex items-center justify-center mb-4 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                        </div>
+                        <span
+                            class="absolute -top-2 -right-2 bg-primary-600 text-white font-bold rounded-full h-8 w-8 flex items-center justify-center">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Seguimiento y Optimización</h3>
+                    <p class="text-gray-600">Acompañamos tu ciclo de cultivo, ajustando el plan para asegurar el máximo
+                        rendimiento y calidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Servicios Detallada -->
+    <section id="servicios" class="py-20 md:py-28 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <span class="text-primary-600 font-semibold tracking-wider">SERVICIOS</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Soluciones Integrales</h2>
+                <p class="text-lg text-gray-600">
+                    Desde el análisis inicial hasta la cosecha, te ofrecemos una gama completa de servicios para
+                    potenciar tu producción.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Servicio 1 -->
+                <div class="bg-white p-8 animate-on-scroll rounded-lg shadow-md">
+                    <div
+                        class="bg-primary-100 text-primary-600 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 3l6-3" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Planificación Estratégica</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Análisis de
+                            suelo y agua.</li>
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Definición
+                            de metas de rendimiento.</li>
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Calendario
+                            de aplicaciones.</li>
+                    </ul>
+                </div>
+
+                <!-- Servicio 2 -->
+                <div class="bg-white p-8 animate-on-scroll rounded-lg shadow-md delay-100">
+                    <div
+                        class="bg-primary-100 text-primary-600 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547a2 2 0 00-.547 1.806l.477 2.387a6 6 0 00.517 3.86l.158.318a6 6 0 003.86.517l2.387.477a2 2 0 001.806-.547a2 2 0 00.547-1.806l-.477-2.387a6 6 0 00-.517-3.86l-.158-.318z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v1.586m0 0v1.586m0-1.586h1.586m-1.586 0H10.414" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Nutrición de Precisión</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Programas
+                            de fertirrigación.</li>
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Uso de
+                            bioestimulantes y mejoradores.</li>
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Corrección
+                            de deficiencias.</li>
+                    </ul>
+                </div>
+
+                <!-- Servicio 3 -->
+                <div class="bg-white p-8 animate-on-scroll rounded-lg shadow-md delay-200">
+                    <div
+                        class="bg-primary-100 text-primary-600 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Manejo Integrado</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Control de
+                            plagas y enfermedades.</li>
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Asesoría en
+                            uso de agroquímicos.</li>
+                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Soluciones
+                            biológicas y sostenibles.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 text-center bg-white p-8 rounded-lg shadow-md animate-on-scroll">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">¿No estás seguro por dónde empezar?</h3>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    Nuestra IA te puede ayudar. Describe brevemente tu terreno y te daremos ideas de cultivos rentables
+                    para nuestra región.
+                </p>
+                <button id="gemini-idea-generator"
+                    class="inline-flex items-center bg-primary-600 text-white px-6 py-3 rounded-md font-medium shadow-md hover:bg-primary-700 transition-colors">
+                    ✨ Generar Ideas para Cultivo
+                </button>
+                <div id="gemini-idea-container"
+                    class="mt-4 p-4 border-l-4 border-primary-500 bg-primary-50 text-left hidden">
+                    <div id="gemini-idea-loader" class="flex items-center justify-center my-4 hidden">
+                        <svg class="animate-spin h-5 w-5 text-primary-600" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <p class="ml-2 text-gray-600">Buscando las mejores opciones para ti...</p>
+                    </div>
+                    <div id="gemini-idea-response"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Galería -->
+    <section id="galeria" class="py-20 md:py-28 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <span class="text-primary-600 font-semibold tracking-wider">GALERÍA</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
+                    Resultados que se Pueden Ver
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group relative rounded-xl overflow-hidden shadow-lg animate-on-scroll cursor-pointer"
+                    onclick="openModal('https://images.unsplash.com/photo-1627920364375-339228955d8a?auto=format&fit=crop&w=800&q=80', 'Monitoreo con drones')">
+                    <img src="https://images.unsplash.com/photo-1627920364375-339228955d8a?auto=format&fit=crop&w=800&q=80"
+                        alt="Monitoreo de cultivo con dron"
+                        class="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                        <h3 class="text-white text-xl font-bold">Monitoreo con Drones</h3>
+                    </div>
+                </div>
+                <div class="group relative rounded-xl overflow-hidden shadow-lg animate-on-scroll cursor-pointer delay-100"
+                    onclick="openModal('https://images.unsplash.com/photo-1563969018598-638f293b4a2e?auto=format&fit=crop&w=800&q=80', 'Sistemas de riego inteligentes')">
+                    <img src="https://images.unsplash.com/photo-1563969018598-638f293b4a2e?auto=format&fit=crop&w=800&q=80"
+                        alt="Sistema de riego automatizado en campo"
+                        class="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                        <h3 class="text-white text-xl font-bold">Riego Inteligente</h3>
+                    </div>
+                </div>
+                <div class="group relative rounded-xl overflow-hidden shadow-lg animate-on-scroll cursor-pointer delay-200"
+                    onclick="openModal('https://images.unsplash.com/photo-1597371300267-3105a072d822?auto=format&fit=crop&w=800&q=80', 'Cultivos hidropónicos de alta densidad')">
+                    <img src="https://images.unsplash.com/photo-1597371300267-3105a072d822?auto=format&fit=crop&w=800&q=80"
+                        alt="Cultivo de hortalizas en sistema hidropónico"
+                        class="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                        <h3 class="text-white text-xl font-bold">Cultivos de Alta Densidad</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Testimonios -->
+    <section id="testimonios" class="py-20 md:py-28 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <span class="text-primary-600 font-semibold tracking-wider">TESTIMONIOS</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
+                    La Voz de Nuestros Clientes
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 animate-on-scroll">
+                    <div class="flex items-center mb-4"><img
+                            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&q=80"
+                            alt="Juan Pérez" class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Juan Pérez</h3>
+                            <p class="text-gray-500">Productor de berries</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-gray-600 italic">"Con su plan técnico, <strong>aumenté mi producción un
+                            35%</strong> y <strong>reduje costos un 20%</strong>. Finalmente entiendo el porqué de cada
+                        acción en mi campo."</blockquote>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 animate-on-scroll delay-100">
+                    <div class="flex items-center mb-4"><img
+                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&q=80"
+                            alt="María González" class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">María González</h3>
+                            <p class="text-gray-500">Productora de aguacate</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-gray-600 italic">"Resolvieron mis problemas de plagas y me enseñaron a
+                        prevenir. Mis frutas mejoraron tanto que logré <strong>entrar al mercado de
+                            exportación</strong>."</blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección FAQ -->
+    <section id="faq" class="py-20 md:py-28 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <span class="text-primary-600 font-semibold tracking-wider">PREGUNTAS FRECUENTES</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Resolvemos tus Dudas</h2>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="animate-on-scroll">
+                    <details class="group p-6 border rounded-lg bg-gray-50">
+                        <summary class="flex items-center justify-between cursor-pointer font-semibold text-lg">
+                            ¿Qué costo tiene el diagnóstico inicial?
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 transform group-open:-rotate-180 transition-transform" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <p class="mt-4 text-gray-600">Nuestro diagnóstico inicial es completamente GRATIS y sin
+                            compromiso. Nos permite entender tus necesidades para ofrecerte un plan a la medida.</p>
+                    </details>
+                </div>
+                <div class="animate-on-scroll delay-100">
+                    <details class="group p-6 border rounded-lg bg-gray-50">
+                        <summary class="flex items-center justify-between cursor-pointer font-semibold text-lg">
+                            ¿En qué zonas de México ofrecen servicio?
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 transform group-open:-rotate-180 transition-transform" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <p class="mt-4 text-gray-600">Actualmente nuestra base de operaciones está en Michoacán, pero
+                            brindamos asesoría y servicio a productores en toda la República Mexicana.</p>
+                    </details>
+                </div>
+                <div class="animate-on-scroll delay-200">
+                    <details class="group p-6 border rounded-lg bg-gray-50">
+                        <summary class="flex items-center justify-between cursor-pointer font-semibold text-lg">
+                            ¿Con qué tipos de cultivos trabajan?
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 transform group-open:-rotate-180 transition-transform" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <p class="mt-4 text-gray-600">Tenemos amplia experiencia en una gran variedad de cultivos,
+                            incluyendo berries, aguacate, maíz, hortalizas y más. Cada plan se adapta a las necesidades
+                            específicas de cada planta.</p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="py-20 md:py-28 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Inicia tu <span class="text-primary-600">Transformación Hoy</span>
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Completa el formulario o contáctanos directamente. Un experto te atenderá en menos de 24 horas.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="animate-on-scroll">
+                    <div class="space-y-6 text-lg">
+                        <div class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Ubicación</h4>
+                                <p class="text-gray-600">Cda. de Hidalgo 305, Copándaro, Mich.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Email</h4><a href="mailto:contacto@agronore.com"
+                                    class="text-gray-600 hover:text-primary-600">contacto@agronore.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Horario</h4>
+                                <p class="text-gray-600">Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 rounded-xl overflow-hidden shadow-md h-80"><iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3755.976866184852!2d-101.21888868508899!3d19.71360098672522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d116130455555%3A0x863b3a3c10314a51!2sCop%C3%A1ndaro%20de%20Galeana%2C%20Mich.!5e0!3m2!1ses-419!2smx!4v1662071911963!5m2!1ses-419!2smx"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación de Agronoré en Google Maps"></iframe></div>
+                </div>
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-md animate-on-scroll delay-100">
+                    <form id="contact-form" class="space-y-6">
+                        <div><label for="contacto-nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre
+                                completo *</label><input id="contacto-nombre" name="nombre" type="text" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 input-focus">
+                        </div>
+                        <div><label for="contacto-cultivo" class="block text-sm font-medium text-gray-700 mb-1">Tipo de
+                                cultivo *</label><select id="contacto-cultivo" name="cultivo" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 input-focus">
+                                <option value="">Selecciona tu cultivo</option>
+                                <option value="berries">Berries</option>
+                                <option value="maiz">Maíz</option>
+                                <option value="aguacate">Aguacate</option>
+                                <option value="otros">Otros</option>
+                            </select></div>
+                        <div><label for="contacto-telefono"
+                                class="block text-sm font-medium text-gray-700 mb-1">Teléfono *</label><input
+                                id="contacto-telefono" name="telefono" type="tel" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 input-focus"
+                                placeholder="Ej: 443 123 4567"></div>
+                        <div><label for="contacto-mensaje" class="block text-sm font-medium text-gray-700 mb-1">¿Cuál es
+                                tu mayor desafío? *</label><textarea id="contacto-mensaje" name="mensaje" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 min-h-[120px] focus:outline-none focus:ring-2 input-focus"
+                                placeholder="Describe con detalle tu problema para recibir una sugerencia de nuestra IA. Ej: Mis aguacates tienen manchas negras..."></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" id="gemini-suggester-btn"
+                                class="w-full bg-secondary-500 text-white px-6 py-3 rounded-md font-bold text-lg shadow-md hover:bg-orange-500 transition-colors tracking-wider flex items-center justify-center">
+                                ✨ Obtener Sugerencia de IA
+                            </button>
+                        </div>
+
+                        <div id="gemini-response-container"
+                            class="mt-4 p-4 border-l-4 border-primary-500 bg-primary-50 hidden rounded-r-lg">
+                            <h4 class="font-bold text-lg text-primary-700">Sugerencia de Nuestro Asistente IA:</h4>
+                            <div id="gemini-loader" class="flex items-center my-4 hidden">
+                                <svg class="animate-spin h-5 w-5 text-primary-600" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                                <p class="ml-2 text-gray-600">Analizando tu caso...</p>
+                            </div>
+                            <p id="gemini-response-text" class="text-gray-700"></p>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary-600 text-white px-6 py-4 rounded-md font-bold text-lg shadow-md hover:bg-primary-700 transition-colors tracking-wider">ENVIAR
+                            PARA DIAGNÓSTICO COMPLETO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-dark-900 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left items-center">
+                <div class="md:col-span-2">
+                    <img src="https://placehold.co/180x40/18181b/FFFFFF?text=AGRONOR%C3%89&font=poppins"
+                        alt="Logo de Agronoré" class="h-10 w-auto mb-4 mx-auto md:mx-0">
+                    <p class="text-gray-400 max-w-md mx-auto md:mx-0">Innovación y ciencia para la agricultura del
+                        futuro.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="tel:+524437924923" class="hover:text-white">443 792 4923</a></li>
+                        <li><a href="mailto:contacto@agronore.com" class="hover:text-white">contacto@agronore.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Aviso de Privacidad</a></li>
+                        <li><a href="#" class="hover:text-white">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>© <span id="year"></span> Agronoré — Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón de WhatsApp flotante -->
+    <a href="https://wa.me/524437924923" target="_blank" aria-label="Contactar por WhatsApp"
+        class="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-110 whatsapp-float">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.076-.15-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.478 0 1.46.732 2.883.83 3.032.099.148 1.354 2.059 3.256 2.876.909.389 1.653.629 2.002.777.704.297 1.356.21 1.958-.075.586-.28 1.652-.966 1.898-1.898.246-.93 0-1.722-.074-1.995z" />
+        </svg>
+    </a>
+
+    <!-- Modal para imágenes -->
+    <div id="imageModal" class="modal">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage" alt="Imagen ampliada del caso de éxito">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // --- Mobile Menu Logic ---
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOpenIcon = document.getElementById('menu-open-icon');
+            const menuCloseIcon = document.getElementById('menu-close-icon');
+
+            const toggleMenu = () => {
+                mobileMenu.classList.toggle('active');
+                menuOpenIcon.classList.toggle('hidden');
+                menuCloseIcon.classList.toggle('hidden');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+            };
+
+            if (menuButton) menuButton.addEventListener('click', toggleMenu);
+            if (mobileMenu) mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu));
+
+            // --- Image Modal Logic ---
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+
+            window.openModal = (imageSrc, captionText) => {
+                if (modal && modalImage && modalCaption) {
+                    modal.style.display = 'flex';
+                    modalImage.src = imageSrc;
+                    modalCaption.textContent = captionText;
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            window.closeModal = () => {
+                if (modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            };
+
+            if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+            // --- Animate on Scroll Logic ---
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(element => scrollObserver.observe(element));
+
+            // --- Header & Navigation Logic ---
+            const header = document.getElementById('header');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            const headerHeight = header ? header.offsetHeight : 80;
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({ top: targetElement.offsetTop - headerHeight, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // --- Counter Animation Logic ---
+            const counters = document.querySelectorAll('.counter');
+            const animateCounter = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const duration = 2000;
+                const increment = target / (duration / 16);
+
+                const updateCounter = () => {
+                    count += increment;
+                    if (count < target) {
+                        counter.textContent = Math.ceil(count);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                updateCounter();
+            };
+
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            counters.forEach(counter => counterObserver.observe(counter));
+
+
+            const onScroll = () => {
+                const scrollPos = window.scrollY + headerHeight + 50;
+                let activeSectionId = sections.length > 0 ? sections[0].id : '';
+
+                sections.forEach(section => {
+                    if (section.offsetTop <= scrollPos) activeSectionId = section.id;
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active', 'text-primary-600');
+                    if (link.getAttribute('href') === `#${activeSectionId}`) {
+                        link.classList.add('active', 'text-primary-600');
+                    }
+                });
+
+                if (header) {
+                    if (window.scrollY > 10) header.classList.add('shadow-md');
+                    else header.classList.remove('shadow-md');
+                }
+            };
+            window.addEventListener('scroll', onScroll);
+
+            // --- Gemini API Logic ---
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // Feature 1: Contact Form Suggester
+            const suggesterBtn = document.getElementById('gemini-suggester-btn');
+            const responseContainer = document.getElementById('gemini-response-container');
+            const responseText = document.getElementById('gemini-response-text');
+            const loader = document.getElementById('gemini-loader');
+            const cultivoSelect = document.getElementById('contacto-cultivo');
+            const mensajeTextarea = document.getElementById('contacto-mensaje');
+
+            if (suggesterBtn) {
+                suggesterBtn.addEventListener('click', getAiSuggestion);
+            }
+
+            // Feature 2: Crop Idea Generator
+            const ideaBtn = document.getElementById('gemini-idea-generator');
+            const ideaContainer = document.getElementById('gemini-idea-container');
+            const ideaLoader = document.getElementById('gemini-idea-loader');
+            const ideaResponse = document.getElementById('gemini-idea-response');
+
+            if (ideaBtn) {
+                ideaBtn.addEventListener('click', generateCropIdeas);
+            }
+
+            // Reusable fetch function with backoff
+            async function fetchWithBackoff(payload) {
+                let response;
+                let retries = 3;
+                let delay = 1000;
+
+                for (let i = 0; i < retries; i++) {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) return response.json();
+                    if (i < retries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    } else {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                }
+            }
+
+
+            async function getAiSuggestion() {
+                const cultivo = cultivoSelect.value;
+                const problema = mensajeTextarea.value;
+
+                if (!cultivo || !problema) {
+                    alert('Por favor, selecciona tu cultivo y describe tu desafío para recibir una sugerencia.');
+                    return;
+                }
+
+                loader.classList.remove('hidden');
+                responseContainer.classList.remove('hidden');
+                responseText.textContent = '';
+                suggesterBtn.disabled = true;
+                suggesterBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                const systemPrompt = "Actúa como un ingeniero agrónomo experto de la empresa Agronoré, especializado en cultivos de México, particularmente en la región de Michoacán. Proporciona una sugerencia inicial, concisa y práctica (no más de 3-4 frases) para el siguiente problema. Tu consejo debe ser una recomendación general y siempre debe concluir enfatizando que un diagnóstico completo en campo por parte de nuestros expertos es crucial para un plan de acción efectivo. No des soluciones definitivas, sino una orientación profesional y amigable. Responde siempre en español.";
+                const userQuery = `Tengo un cultivo de ${cultivo} y mi problema es: ${problema}.`;
+                const payload = { contents: [{ parts: [{ text: userQuery }] }], systemInstruction: { parts: [{ text: systemPrompt }] } };
+
+                try {
+                    const result = await fetchWithBackoff(payload);
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        responseText.textContent = candidate.content.parts[0].text;
+                    } else {
+                        throw new Error('Invalid API response structure');
+                    }
+                } catch (error) {
+                    console.error('Error calling Gemini API:', error);
+                    responseText.textContent = 'No pudimos conectar con nuestro asistente de IA en este momento. Por favor, intenta más tarde.';
+                } finally {
+                    loader.classList.add('hidden');
+                    suggesterBtn.disabled = false;
+                    suggesterBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+
+            async function generateCropIdeas() {
+                ideaLoader.classList.remove('hidden');
+                ideaContainer.classList.remove('hidden');
+                ideaResponse.innerHTML = '';
+                ideaBtn.disabled = true;
+                ideaBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                const systemPrompt = "Actúa como un agrónomo y asesor de negocios de Agronoré en Michoacán, México. Genera 3 ideas de cultivos rentables para la región, considerando el clima y mercado local. Para cada cultivo, proporciona un título llamativo, una breve descripción (2-3 frases) y 2-3 ventajas clave en formato de lista. Formatea tu respuesta usando HTML simple (ej: <h4>, <p>, <ul>, <li>). Siempre concluye recomendando contactar a Agronoré para un plan de negocio detallado.";
+                const userQuery = "Genera 3 ideas de cultivos para un productor en Michoacán.";
+                const payload = { contents: [{ parts: [{ text: userQuery }] }], systemInstruction: { parts: [{ text: systemPrompt }] } };
+
+                try {
+                    const result = await fetchWithBackoff(payload);
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        ideaResponse.innerHTML = candidate.content.parts[0].text;
+                    } else {
+                        throw new Error('Invalid API response structure');
+                    }
+                } catch (error) {
+                    console.error('Error calling Gemini API for ideas:', error);
+                    ideaResponse.innerHTML = '<p>Hubo un problema al generar las ideas. Por favor, intenta más tarde.</p>';
+                } finally {
+                    ideaLoader.classList.add('hidden');
+                    ideaBtn.disabled = false;
+                    ideaBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+
+            // Prevent default form submission to handle it via JS if needed, but for Formspree it's ok.
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    // This allows the form to be submitted to Formspree
+                    // If you were handling it with JS, you'd put e.preventDefault() here.
+                });
+            }
+
+        });
+    </script>
+</body>
+
+</html>
