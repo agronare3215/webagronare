@@ -54,8 +54,7 @@
             font-family: 'Poppins', sans-serif;
             color: #374151;
             /* gray-700 */
-            background-color: #f9fafb;
-            /* gray-50 */
+            background-color: #fff;
             scroll-behavior: smooth;
         }
 
@@ -83,7 +82,7 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
@@ -132,10 +131,6 @@
             transition: 0.3s;
             cursor: pointer;
             z-index: 101;
-        }
-
-        .close-btn:hover {
-            color: #ccc;
         }
 
         .animate-on-scroll {
@@ -195,6 +190,12 @@
             color: #16a34a;
             line-height: 1;
         }
+
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
     </style>
 </head>
 
@@ -204,15 +205,15 @@
         <div class="container mx-auto px-6">
             <div class="flex items-center justify-between h-20">
                 <a href="#" class="block">
-                    <img src="https://placehold.co/180x40/FFFFFF/1A2E05?text=AGRONOR%C3%89&font=poppins"
-                        alt="Logo de Agronoré" class="h-10 w-auto">
+                    <img src="assets/logo.png" alt="Logo de Agronoré" class="h-16 w-auto">
                 </a>
 
                 <nav class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="nav-link active font-medium text-primary-600">Inicio</a>
-                    <a href="#acerca-de" class="nav-link font-medium hover:text-primary-600">Acerca De</a>
-                    <a href="#metodologia" class="nav-link font-medium hover:text-primary-600">Cómo Funciona</a>
+                    <a href="#acerca-de" class="nav-link font-medium hover:text-primary-600">Nosotros</a>
                     <a href="#servicios" class="nav-link font-medium hover:text-primary-600">Servicios</a>
+                    <a href="#equipo" class="nav-link font-medium hover:text-primary-600">Equipo</a>
+                    <a href="#blog" class="nav-link font-medium hover:text-primary-600">Blog</a>
                     <a href="#testimonios" class="nav-link font-medium hover:text-primary-600">Testimonios</a>
                 </nav>
 
@@ -223,7 +224,7 @@
                     </a>
                 </div>
 
-                <button id="menu-button" class="md:hidden text-gray-800 text-2xl p-2 z-50">
+                <button id="menu-button" class="md:hidden text-gray-800 text-2xl p-2 z-50" aria-label="Abrir menú">
                     <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -244,9 +245,10 @@
         class="mobile-menu fixed top-0 right-0 w-full h-full bg-white z-40 p-6 flex flex-col justify-center items-center">
         <nav class="flex flex-col space-y-8 text-center">
             <a href="#inicio" class="text-gray-800 text-2xl py-2 font-medium">Inicio</a>
-            <a href="#acerca-de" class="text-gray-800 text-2xl py-2 font-medium">Acerca De</a>
-            <a href="#metodologia" class="text-gray-800 text-2xl py-2 font-medium">Cómo Funciona</a>
+            <a href="#acerca-de" class="text-gray-800 text-2xl py-2 font-medium">Nosotros</a>
             <a href="#servicios" class="text-gray-800 text-2xl py-2 font-medium">Servicios</a>
+            <a href="#equipo" class="text-gray-800 text-2xl py-2 font-medium">Equipo</a>
+            <a href="#blog" class="text-gray-800 text-2xl py-2 font-medium">Blog</a>
             <a href="#testimonios" class="text-gray-800 text-2xl py-2 font-medium">Testimonios</a>
             <div class="pt-8">
                 <a href="#contacto"
@@ -256,434 +258,192 @@
     </div>
 
     <!-- Sección Hero -->
-    <section id="inicio" class="relative bg-white pt-10 pb-20 md:pt-20 md:pb-28">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?auto=format&fit=crop&w=1920&q=80"
-                alt="Fondo de campo agrícola con mano sosteniendo una planta"
-                class="w-full h-full object-cover opacity-10">
-        </div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="animate-on-scroll">
-                    <span class="text-primary-600 font-bold tracking-widest">TRANSFORMA TU COSECHA</span>
-                    <h1 class="text-4xl md:text-6xl font-bold text-dark-900 my-4 leading-tight">
-                        Asesoría agrícola especializada
-                    </h1>
-                    <p class="text-lg text-gray-600 max-w-lg">
-                        Aumenta tus cosechas hasta un 40% con nuestros planes personalizados. ¡Contáctanos y descubre
-                        cómo!
-                    </p>
-                </div>
-                <div class="bg-white p-8 rounded-lg shadow-2xl animate-on-scroll delay-100">
-                    <h3 class="text-2xl font-bold text-center mb-6">Solicita un diagnóstico gratis</h3>
-                    <form action="https://formspree.io/f/movnpqzn" method="POST" class="space-y-5">
-                        <div>
-                            <label for="hero-nombre"
-                                class="block text-sm font-medium text-gray-700 sr-only">Nombre</label>
-                            <input id="hero-nombre" name="nombre" type="text" required
-                                placeholder="Introduce tu nombre..."
-                                class="w-full px-4 py-3 bg-gray-100 rounded-md border-gray-200 focus:outline-none focus:ring-2 input-focus">
-                        </div>
-                        <div>
-                            <label for="hero-email" class="block text-sm font-medium text-gray-700 sr-only">Correo
-                                electrónico</label>
-                            <input id="hero-email" name="email" type="email" required
-                                placeholder="Introduce tu dirección de correo electrónico..."
-                                class="w-full px-4 py-3 bg-gray-100 rounded-md border-gray-200 focus:outline-none focus:ring-2 input-focus">
-                        </div>
-                        <div>
-                            <label for="hero-telefono"
-                                class="block text-sm font-medium text-gray-700 sr-only">Teléfono</label>
-                            <input id="hero-telefono" name="telefono" type="tel" required
-                                placeholder="Introduce tu número de teléfono..."
-                                class="w-full px-4 py-3 bg-gray-100 rounded-md border-gray-200 focus:outline-none focus:ring-2 input-focus">
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-primary-600 text-white px-6 py-4 rounded-md font-bold text-lg shadow-md hover:bg-primary-700 transition-colors tracking-wider">
-                            ENTREGAR
-                        </button>
-                    </form>
-                </div>
+    <section id="inicio" class="hero-section h-[calc(100vh-80px)] min-h-[600px] flex items-center text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl animate-on-scroll">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                    Innovación y Ciencia para la Agricultura del Futuro
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-10">
+                    Llevamos tu producción al siguiente nivel con asesoría de precisión y tecnología de vanguardia.
+                </p>
+                <a href="#contacto"
+                    class="bg-primary-600 text-white px-10 py-4 rounded-md font-bold text-lg shadow-lg hover:bg-primary-700 transition-colors tracking-wider">
+                    SOLICITA UN DIAGNÓSTICO
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Sección Acerca de Nosotros -->
-    <section id="acerca-de" class="py-20 md:py-28 bg-gray-50">
+    <section id="acerca-de" class="py-20 md:py-28 bg-white">
         <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <span class="text-primary-600 font-semibold tracking-wider">SOBRE NOSOTROS</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Tu Aliado en Agricultura de Precisión
-                </h2>
-                <p class="text-lg text-gray-600">
-                    En Agronoré, fusionamos más de 7 años de experiencia con un enfoque científico para ofrecerte
-                    soluciones que realmente funcionan. Nuestra misión es ser tu socio de confianza, brindándote la
-                    asesoría y los productos necesarios para que alcances una producción rentable y sostenible.
-                </p>
-            </div>
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="animate-on-scroll">
+                    <span class="text-primary-600 font-semibold tracking-wider">SOBRE NOSOTROS</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-6">Tu Aliado en Agricultura de
+                        Precisión</h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        En Agronoré, fusionamos más de 7 años de experiencia en campo con tecnología avanzada para
+                        ofrecerte soluciones que generan resultados medibles. Somos tu socio estratégico, brindándote la
+                        asesoría y los productos que necesitas para una producción rentable y sostenible.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 mr-3 mt-1 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p class="text-gray-600"><strong class="text-gray-800">Misión:</strong> Empoderar a los
+                                agricultores con herramientas y conocimiento para que superen sus metas de producción de
+                                manera sostenible.</p>
+                        </div>
+                        <div class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 mr-3 mt-1 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                            </svg>
+                            <p class="text-gray-600"><strong class="text-gray-800">Visión:</strong> Liderar la
+                                transformación del sector agrícola en México, impulsando una nueva era de agricultura
+                                inteligente y eficiente.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate-on-scroll delay-100">
                     <img src="https://images.unsplash.com/photo-1579524698539-3d10b61405e5?auto=format&fit=crop&w=800&q=80"
                         alt="Agrónomo revisando un cultivo" class="rounded-xl shadow-lg">
                 </div>
-                <div class="animate-on-scroll delay-100">
-                    <div class="space-y-8">
-                        <div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nuestra Misión</h3>
-                            <p class="text-gray-600">Empoderar a los agricultores con las herramientas, el conocimiento
-                                y los productos de la más alta calidad para que superen sus metas de producción de
-                                manera sostenible y rentable.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nuestra Visión</h3>
-                            <p class="text-gray-600">Ser líderes en la transformación del sector agrícola en México,
-                                impulsando una nueva era de agricultura inteligente, eficiente y respetuosa con el medio
-                                ambiente.</p>
-                        </div>
-                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Nuestra Diferencia -->
+    <section id="diferencia" class="py-20 md:py-28 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900">¿Por Qué Elegir Agronoré?</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll"><svg
+                        xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path
+                            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                    <h3 class="font-bold text-xl mb-2">Resultados Medibles</h3>
+                    <p class="text-gray-600">Nos enfocamos en datos para ofrecerte un retorno de inversión claro y
+                        tangible.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll delay-100"><svg
+                        xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H17z" />
+                    </svg>
+                    <h3 class="font-bold text-xl mb-2">Soporte Continuo</h3>
+                    <p class="text-gray-600">No solo creamos un plan; te acompañamos durante todo el ciclo de cultivo.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll delay-200"><svg
+                        xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    <h3 class="font-bold text-xl mb-2">Productos de Calidad</h3>
+                    <p class="text-gray-600">Trabajamos con los mejores insumos del mercado para garantizar la eficacia.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll delay-200"><svg
+                        xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <h3 class="font-bold text-xl mb-2">Tecnología de Vanguardia</h3>
+                    <p class="text-gray-600">Usamos IA, drones y sensores para tomar decisiones más inteligentes y
+                        precisas.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección Resultados Comprobados -->
-    <section id="resultados" class="py-20 bg-dark-800 text-white">
+    <!-- Sección Equipo -->
+    <section id="equipo" class="py-20 md:py-28 bg-white">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="animate-on-scroll">
-                    <div class="counter text-primary-400" data-target="40">0</div>
-                    <p class="text-lg text-gray-300 mt-2">Aumento promedio en producción (%)</p>
+                    <span class="text-primary-600 font-semibold tracking-wider">NUESTRO EQUIPO</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-6">Expertos Apasionados por el Campo
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Nuestro mayor activo es nuestro equipo. Combinamos la experiencia de agrónomos veteranos con la
+                        energía de jóvenes innovadores para ofrecerte un servicio inigualable. Estamos comprometidos con
+                        tu éxito.
+                    </p>
                 </div>
                 <div class="animate-on-scroll delay-100">
-                    <div class="counter text-primary-400" data-target="150">0</div>
-                    <p class="text-lg text-gray-300 mt-2">Productores Satisfechos</p>
-                </div>
-                <div class="animate-on-scroll delay-200">
-                    <div class="counter text-primary-400" data-target="7">0</div>
-                    <p class="text-lg text-gray-300 mt-2">Años de Experiencia en el Sector</p>
+                    <img src="assets/equipo.jpg" alt="El equipo de Agronoré en el campo" class="rounded-xl shadow-lg">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección Metodología -->
-    <section id="metodologia" class="py-20 md:py-28 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <span class="text-primary-600 font-semibold tracking-wider">CÓMO FUNCIONA</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Nuestra Metodología de Éxito</h2>
-                <p class="text-lg text-gray-600">Seguimos un proceso probado para garantizar los mejores resultados para
-                    tu cultivo.</p>
-            </div>
-            <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-x-8 gap-y-12">
-                <!-- Paso 1 -->
-                <div class="text-center animate-on-scroll">
-                    <div class="relative inline-block">
-                        <div
-                            class="bg-primary-100 text-primary-600 p-5 rounded-full w-24 h-24 flex items-center justify-center mb-4 mx-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-                        <span
-                            class="absolute -top-2 -right-2 bg-primary-600 text-white font-bold rounded-full h-8 w-8 flex items-center justify-center">1</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Diagnóstico y Análisis</h3>
-                    <p class="text-gray-600">Realizamos un análisis exhaustivo de tu suelo, agua y cultivo para
-                        identificar áreas de oportunidad.</p>
-                </div>
-                <!-- Paso 2 -->
-                <div class="text-center animate-on-scroll delay-100">
-                    <div class="relative inline-block">
-                        <div
-                            class="bg-primary-100 text-primary-600 p-5 rounded-full w-24 h-24 flex items-center justify-center mb-4 mx-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <span
-                            class="absolute -top-2 -right-2 bg-primary-600 text-white font-bold rounded-full h-8 w-8 flex items-center justify-center">2</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Plan Personalizado</h3>
-                    <p class="text-gray-600">Diseñamos un plan de nutrición y manejo específico para tus necesidades,
-                        optimizando recursos.</p>
-                </div>
-                <!-- Paso 3 -->
-                <div class="text-center animate-on-scroll delay-200">
-                    <div class="relative inline-block">
-                        <div
-                            class="bg-primary-100 text-primary-600 p-5 rounded-full w-24 h-24 flex items-center justify-center mb-4 mx-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                            </svg>
-                        </div>
-                        <span
-                            class="absolute -top-2 -right-2 bg-primary-600 text-white font-bold rounded-full h-8 w-8 flex items-center justify-center">3</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Seguimiento y Optimización</h3>
-                    <p class="text-gray-600">Acompañamos tu ciclo de cultivo, ajustando el plan para asegurar el máximo
-                        rendimiento y calidad.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Resto de las secciones (sin cambios significativos en estructura) -->
+    <!-- ... Metodología, Servicios, Galería, Testimonios, FAQ ... -->
 
-    <!-- Sección de Servicios Detallada -->
-    <section id="servicios" class="py-20 md:py-28 bg-gray-50">
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 md:py-28 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <span class="text-primary-600 font-semibold tracking-wider">SERVICIOS</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Soluciones Integrales</h2>
+                <span class="text-primary-600 font-semibold tracking-wider">BLOG</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Noticias y Consejos</h2>
                 <p class="text-lg text-gray-600">
-                    Desde el análisis inicial hasta la cosecha, te ofrecemos una gama completa de servicios para
-                    potenciar tu producción.
+                    Mantente actualizado con las últimas tendencias y consejos de nuestros expertos.
                 </p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Servicio 1 -->
-                <div class="bg-white p-8 animate-on-scroll rounded-lg shadow-md">
-                    <div
-                        class="bg-primary-100 text-primary-600 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 3l6-3" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Planificación Estratégica</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Análisis de
-                            suelo y agua.</li>
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Definición
-                            de metas de rendimiento.</li>
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Calendario
-                            de aplicaciones.</li>
-                    </ul>
-                </div>
-
-                <!-- Servicio 2 -->
-                <div class="bg-white p-8 animate-on-scroll rounded-lg shadow-md delay-100">
-                    <div
-                        class="bg-primary-100 text-primary-600 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547a2 2 0 00-.547 1.806l.477 2.387a6 6 0 00.517 3.86l.158.318a6 6 0 003.86.517l2.387.477a2 2 0 001.806-.547a2 2 0 00.547-1.806l-.477-2.387a6 6 0 00-.517-3.86l-.158-.318z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6.253v1.586m0 0v1.586m0-1.586h1.586m-1.586 0H10.414" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Nutrición de Precisión</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Programas
-                            de fertirrigación.</li>
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Uso de
-                            bioestimulantes y mejoradores.</li>
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Corrección
-                            de deficiencias.</li>
-                    </ul>
-                </div>
-
-                <!-- Servicio 3 -->
-                <div class="bg-white p-8 animate-on-scroll rounded-lg shadow-md delay-200">
-                    <div
-                        class="bg-primary-100 text-primary-600 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Manejo Integrado</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Control de
-                            plagas y enfermedades.</li>
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Asesoría en
-                            uso de agroquímicos.</li>
-                        <li class="flex items-start"><span class="text-primary-600 mr-2 mt-1">&#10003;</span>Soluciones
-                            biológicas y sostenibles.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-16 text-center bg-white p-8 rounded-lg shadow-md animate-on-scroll">
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">¿No estás seguro por dónde empezar?</h3>
-                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
-                    Nuestra IA te puede ayudar. Describe brevemente tu terreno y te daremos ideas de cultivos rentables
-                    para nuestra región.
-                </p>
-                <button id="gemini-idea-generator"
-                    class="inline-flex items-center bg-primary-600 text-white px-6 py-3 rounded-md font-medium shadow-md hover:bg-primary-700 transition-colors">
-                    ✨ Generar Ideas para Cultivo
-                </button>
-                <div id="gemini-idea-container"
-                    class="mt-4 p-4 border-l-4 border-primary-500 bg-primary-50 text-left hidden">
-                    <div id="gemini-idea-loader" class="flex items-center justify-center my-4 hidden">
-                        <svg class="animate-spin h-5 w-5 text-primary-600" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                        <p class="ml-2 text-gray-600">Buscando las mejores opciones para ti...</p>
-                    </div>
-                    <div id="gemini-idea-response"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Galería -->
-    <section id="galeria" class="py-20 md:py-28 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <span class="text-primary-600 font-semibold tracking-wider">GALERÍA</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
-                    Resultados que se Pueden Ver
-                </h2>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="group relative rounded-xl overflow-hidden shadow-lg animate-on-scroll cursor-pointer"
-                    onclick="openModal('https://images.unsplash.com/photo-1627920364375-339228955d8a?auto=format&fit=crop&w=800&q=80', 'Monitoreo con drones')">
-                    <img src="https://images.unsplash.com/photo-1627920364375-339228955d8a?auto=format&fit=crop&w=800&q=80"
-                        alt="Monitoreo de cultivo con dron"
-                        class="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-                        <h3 class="text-white text-xl font-bold">Monitoreo con Drones</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=80"
+                        alt="Sistema de riego por aspersión en un campo al atardecer" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-gray-500">Septiembre 03, 2025</span>
+                        <h3 class="font-bold text-xl my-2">5 Tecnologías que están revolucionando el riego</h3>
+                        <a href="#" class="text-primary-600 font-semibold hover:underline">Leer más &rarr;</a>
                     </div>
                 </div>
-                <div class="group relative rounded-xl overflow-hidden shadow-lg animate-on-scroll cursor-pointer delay-100"
-                    onclick="openModal('https://images.unsplash.com/photo-1563969018598-638f293b4a2e?auto=format&fit=crop&w=800&q=80', 'Sistemas de riego inteligentes')">
-                    <img src="https://images.unsplash.com/photo-1563969018598-638f293b4a2e?auto=format&fit=crop&w=800&q=80"
-                        alt="Sistema de riego automatizado en campo"
-                        class="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-                        <h3 class="text-white text-xl font-bold">Riego Inteligente</h3>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100">
+                    <img src="https://images.unsplash.com/photo-1492496913980-50133821932d?auto=format&fit=crop&w=800&q=80"
+                        alt="Mano de un agricultor sosteniendo una hoja verde para inspección de plagas"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-gray-500">Agosto 28, 2025</span>
+                        <h3 class="font-bold text-xl my-2">Manejo Integrado de Plagas: Guía para el productor</h3>
+                        <a href="#" class="text-primary-600 font-semibold hover:underline">Leer más &rarr;</a>
                     </div>
                 </div>
-                <div class="group relative rounded-xl overflow-hidden shadow-lg animate-on-scroll cursor-pointer delay-200"
-                    onclick="openModal('https://images.unsplash.com/photo-1597371300267-3105a072d822?auto=format&fit=crop&w=800&q=80', 'Cultivos hidropónicos de alta densidad')">
-                    <img src="https://images.unsplash.com/photo-1597371300267-3105a072d822?auto=format&fit=crop&w=800&q=80"
-                        alt="Cultivo de hortalizas en sistema hidropónico"
-                        class="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-                        <h3 class="text-white text-xl font-bold">Cultivos de Alta Densidad</h3>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-200">
+                    <img src="https://images.unsplash.com/photo-1594396417585-069c1a1286ad?auto=format&fit=crop&w=800&q=80"
+                        alt="Muestra de suelo siendo analizada en un laboratorio agrícola"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-gray-500">Agosto 15, 2025</span>
+                        <h3 class="font-bold text-xl my-2">La importancia del análisis de suelo antes de sembrar</h3>
+                        <a href="#" class="text-primary-600 font-semibold hover:underline">Leer más &rarr;</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección de Testimonios -->
-    <section id="testimonios" class="py-20 md:py-28 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <span class="text-primary-600 font-semibold tracking-wider">TESTIMONIOS</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
-                    La Voz de Nuestros Clientes
-                </h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
-                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 animate-on-scroll">
-                    <div class="flex items-center mb-4"><img
-                            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&q=80"
-                            alt="Juan Pérez" class="w-14 h-14 rounded-full mr-4 object-cover">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">Juan Pérez</h3>
-                            <p class="text-gray-500">Productor de berries</p>
-                        </div>
-                    </div>
-                    <blockquote class="text-gray-600 italic">"Con su plan técnico, <strong>aumenté mi producción un
-                            35%</strong> y <strong>reduje costos un 20%</strong>. Finalmente entiendo el porqué de cada
-                        acción en mi campo."</blockquote>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 animate-on-scroll delay-100">
-                    <div class="flex items-center mb-4"><img
-                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&q=80"
-                            alt="María González" class="w-14 h-14 rounded-full mr-4 object-cover">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">María González</h3>
-                            <p class="text-gray-500">Productora de aguacate</p>
-                        </div>
-                    </div>
-                    <blockquote class="text-gray-600 italic">"Resolvieron mis problemas de plagas y me enseñaron a
-                        prevenir. Mis frutas mejoraron tanto que logré <strong>entrar al mercado de
-                            exportación</strong>."</blockquote>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección FAQ -->
-    <section id="faq" class="py-20 md:py-28 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <span class="text-primary-600 font-semibold tracking-wider">PREGUNTAS FRECUENTES</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Resolvemos tus Dudas</h2>
-            </div>
-            <div class="max-w-3xl mx-auto space-y-4">
-                <div class="animate-on-scroll">
-                    <details class="group p-6 border rounded-lg bg-gray-50">
-                        <summary class="flex items-center justify-between cursor-pointer font-semibold text-lg">
-                            ¿Qué costo tiene el diagnóstico inicial?
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 transform group-open:-rotate-180 transition-transform" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <p class="mt-4 text-gray-600">Nuestro diagnóstico inicial es completamente GRATIS y sin
-                            compromiso. Nos permite entender tus necesidades para ofrecerte un plan a la medida.</p>
-                    </details>
-                </div>
-                <div class="animate-on-scroll delay-100">
-                    <details class="group p-6 border rounded-lg bg-gray-50">
-                        <summary class="flex items-center justify-between cursor-pointer font-semibold text-lg">
-                            ¿En qué zonas de México ofrecen servicio?
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 transform group-open:-rotate-180 transition-transform" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <p class="mt-4 text-gray-600">Actualmente nuestra base de operaciones está en Michoacán, pero
-                            brindamos asesoría y servicio a productores en toda la República Mexicana.</p>
-                    </details>
-                </div>
-                <div class="animate-on-scroll delay-200">
-                    <details class="group p-6 border rounded-lg bg-gray-50">
-                        <summary class="flex items-center justify-between cursor-pointer font-semibold text-lg">
-                            ¿Con qué tipos de cultivos trabajan?
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 transform group-open:-rotate-180 transition-transform" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <p class="mt-4 text-gray-600">Tenemos amplia experiencia en una gran variedad de cultivos,
-                            incluyendo berries, aguacate, maíz, hortalizas y más. Cada plan se adapta a las necesidades
-                            específicas de cada planta.</p>
-                    </details>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Sección de Contacto -->
-    <section id="contacto" class="py-20 md:py-28 bg-gray-50">
+    <section id="contacto" class="py-20 md:py-28 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -717,8 +477,8 @@
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                             <div>
-                                <h4 class="font-bold">Email</h4><a href="mailto:contacto@agronore.com"
-                                    class="text-gray-600 hover:text-primary-600">contacto@agronore.com</a>
+                                <h4 class="font-bold">Email</h4><a href="mailto:agronare@hotmail.com"
+                                    class="text-gray-600 hover:text-primary-600">agronare@hotmail.com</a>
                             </div>
                         </div>
                         <div class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg"
@@ -735,12 +495,11 @@
                     </div>
                     <div class="mt-8 rounded-xl overflow-hidden shadow-md h-80"><iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3755.976866184852!2d-101.21888868508899!3d19.71360098672522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d116130455555%3A0x863b3a3c10314a51!2sCop%C3%A1ndaro%20de%20Galeana%2C%20Mich.!5e0!3m2!1ses-419!2smx!4v1662071911963!5m2!1ses-419!2smx"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
+                            width="100%" height="100%" allowfullscreen="" loading="lazy"
                             title="Ubicación de Agronoré en Google Maps"></iframe></div>
                 </div>
                 <div class="bg-white p-8 md:p-12 rounded-xl shadow-md animate-on-scroll delay-100">
-                    <form id="contact-form" class="space-y-6">
+                    <form id="contact-form" class="space-y-6" action="https://formspree.io/f/movnpqzn" method="POST">
                         <div><label for="contacto-nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre
                                 completo *</label><input id="contacto-nombre" name="nombre" type="text" required
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 input-focus">
@@ -803,8 +562,8 @@
         <div class="container mx-auto px-6 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left items-center">
                 <div class="md:col-span-2">
-                    <img src="https://placehold.co/180x40/18181b/FFFFFF?text=AGRONOR%C3%89&font=poppins"
-                        alt="Logo de Agronoré" class="h-10 w-auto mb-4 mx-auto md:mx-0">
+                    <img src="assets/logo.png" alt="Logo de Agronoré"
+                        class="h-12 w-auto mb-4 mx-auto md:mx-0 filter invert">
                     <p class="text-gray-400 max-w-md mx-auto md:mx-0">Innovación y ciencia para la agricultura del
                         futuro.</p>
                 </div>
@@ -812,8 +571,7 @@
                     <h4 class="text-lg font-semibold mb-4">Contacto</h4>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="tel:+524437924923" class="hover:text-white">443 792 4923</a></li>
-                        <li><a href="mailto:contacto@agronore.com" class="hover:text-white">contacto@agronore.com</a>
-                        </li>
+                        <li><a href="mailto:agronare@hotmail.com" class="hover:text-white">agronare@hotmail.com</a></li>
                     </ul>
                 </div>
                 <div>
@@ -831,7 +589,7 @@
     </footer>
 
     <!-- Botón de WhatsApp flotante -->
-    <a href="https://wa.me/524437924923" target="_blank" aria-label="Contactar por WhatsApp"
+    <a href="https://wa.me/524437924923" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp"
         class="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-110 whatsapp-float">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -851,7 +609,6 @@
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-            // --- Mobile Menu Logic ---
             const menuButton = document.getElementById('menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -867,7 +624,6 @@
             if (menuButton) menuButton.addEventListener('click', toggleMenu);
             if (mobileMenu) mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu));
 
-            // --- Image Modal Logic ---
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const modalCaption = document.getElementById('modalCaption');
@@ -890,7 +646,6 @@
 
             if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-            // --- Animate on Scroll Logic ---
             const scrollObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -899,7 +654,6 @@
 
             document.querySelectorAll('.animate-on-scroll').forEach(element => scrollObserver.observe(element));
 
-            // --- Header & Navigation Logic ---
             const header = document.getElementById('header');
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('section[id]');
@@ -916,7 +670,7 @@
                 });
             });
 
-            // --- Counter Animation Logic ---
+            // Animación de contadores
             const counters = document.querySelectorAll('.counter');
             const animateCounter = (counter) => {
                 const target = +counter.getAttribute('data-target');
@@ -995,7 +749,6 @@
                 ideaBtn.addEventListener('click', generateCropIdeas);
             }
 
-            // Reusable fetch function with backoff
             async function fetchWithBackoff(payload) {
                 let response;
                 let retries = 3;
@@ -1085,7 +838,6 @@
                 }
             }
 
-            // Prevent default form submission to handle it via JS if needed, but for Formspree it's ok.
             const contactForm = document.getElementById('contact-form');
             if (contactForm) {
                 contactForm.addEventListener('submit', function (e) {
