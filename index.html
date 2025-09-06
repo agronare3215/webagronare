@@ -793,31 +793,6 @@
             }
         }
 
-        // Carga dinámica del script de Google Maps pidiendo la key al servidor (/maps-key)
-        async function loadGoogleMapsScript() {
-            try {
-                const res = await fetch('/maps-key', { cache: 'no-store' });
-                if (!res.ok) throw new Error('No se obtuvo la clave de Maps del servidor');
-                const json = await res.json();
-                const key = json.key;
-                if (!key) throw new Error('La respuesta no contiene { key }');
-
-                // Crea el script con callback global initMap
-                const s = document.createElement('script');
-                s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&callback=initMap&v=weekly`;
-                s.async = true;
-                s.defer = true;
-                s.onerror = function (e) {
-                    console.error('Error al cargar la librería de Google Maps', e);
-                    document.getElementById('map-error').style.display = 'block';
-                };
-                document.head.appendChild(s);
-            } catch (err) {
-                console.error('Error al obtener la maps key:', err);
-                document.getElementById('map-error').style.display = 'block';
-            }
-        }
-
         // ------- UI & interactions -------
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializar emails/año
@@ -969,9 +944,32 @@
                 }
             });
 
-            // Finalmente: pedir al servidor la maps key y cargar la librería
-            loadGoogleMapsScript();
+            // Nota: la librería de Maps se carga en el bloque final de este archivo (script con la API key)
         });
+
+        /***********************************************************************
+         * CARGA DIRECTA DE GOOGLE MAPS (ESTA ES LA PARTE QUE REEMPLAZA /maps-key)
+         * Hemos insertado la API key directamente (la que proporcionaste).
+         * Asegúrate de restringirla por 'HTTP referrers' en Google Cloud Console.
+         ***********************************************************************/
+        (function loadMapsDirectly() {
+            // ======= REEMPLAZA la key solo si quieres cambiarla (ahora está la que compartiste) =======
+            const KEY = 'AIzaSyDoMYJbBKb1J9sOPTWJTyAaTuX5jBZJLtM';
+            if (!KEY || KEY === '') {
+                console.error('No API key proporcionada para Google Maps.');
+                document.getElementById('map-error').style.display = 'block';
+                return;
+            }
+            const s = document.createElement('script');
+            s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(KEY)}&callback=initMap&v=weekly`;
+            s.async = true;
+            s.defer = true;
+            s.onerror = function (e) {
+                console.error('Error al cargar la librería de Google Maps', e);
+                document.getElementById('map-error').style.display = 'block';
+            };
+            document.head.appendChild(s);
+        })();
     </script>
 </body>
 
