@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Gracias — Agronoré</title>
+    <meta name="description" content="Comprobante de cita o solicitud — Agronoré" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <main class="wrap">
+        <div class="card fade-in" role="status" aria-live="polite">
+            <div class="intro">
+                <div class="logo" aria-hidden="true"><img src="/assets/logo.png" alt="Agronoré" /></div>
+                <div class="title">
+                    <h1>¡Gracias! Tu comprobante está listo</h1>
+                    <p>Hemos generado un comprobante con los detalles. Puedes descargarlo o revisarlo en el visor abajo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="left">
+                    <div id="pdfContainer" class="pdf-frame" aria-live="polite">
+                        <!-- iframe o mensaje se inyecta por JS -->
+                        <div id="pdfFallback" style="text-align:center;padding:18px;color:#8b9498">
+                            Cargando comprobante...
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <a id="downloadBtn" class="btn btn-green" href="#" download><svg width="16" height="16"
+                                viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3v12" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                                <path d="M8 11l4 4 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 21H3" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                            </svg> Descargar comprobante</a>
+                        <a id="openNewTab" class="btn btn-outline" href="#" target="_blank" rel="noopener">Abrir en
+                            nueva pestaña</a>
+                        <button onclick="goBack()" class="btn"
+                            style="margin-left:auto;background:#f3f4f6;border-radius:10px">Volver al inicio</button>
+                    </div>
+                </div>
+
+                <aside>
+                    <div class="meta">
+                        <h3 id="metaTitle">Comprobante de Cita</h3>
+                        <p id="metaSubtitle">Fecha y detalles</p>
+
+                        <div class="row">
+                            <div
+                                style="width:44px;height:44px;border-radius:8px;background:#eefaf0;display:flex;align-items:center;justify-content:center">
+                                📄</div>
+                            <div>
+                                <div class="small">Número de comprobante</div>
+                                <strong id="compId">—</strong>
+                            </div>
+                        </div>
+
+                        <div class="row mt-14">
+                            <div>
+                                <div class="small">Nombre</div>
+                                <div id="compName"><em>—</em></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div>
+                                <div class="small">Correo</div>
+                                <div id="compEmail"><em>—</em></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div>
+                                <div class="small">Fecha de cita</div>
+                                <div id="compDate"><em>—</em></div>
+                            </div>
+                        </div>
+
+                        <p class="small" style="margin-top:12px;color:#6b7280">Si tienes problemas para ver el
+                            comprobante, descarga el archivo o contáctanos en <a
+                                href="mailto:hola@agronare.com">hola@agronare.com</a>.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Lee ?file=comprobante.pdf&name=...&email=...&id=...&date=...
+        const params = new URLSearchParams(location.search);
+        const file = params.get('file'); // ex: comprobantes/1234-uuid.pdf or solo filename
+        const name = params.get('name') || '';
+        const email = params.get('email') || '';
+        const id = params.get('id') || (Math.random().toString(36).slice(2, 9).toUpperCase());
+        const date = params.get('date') || new Date().toLocaleString();
+
+        const pdfContainer = document.getElementById('pdfContainer');
+        const pdfFallback = document.getElementById('pdfFallback');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const openNewTab = document.getElementById('openNewTab');
+
+        document.getElementById('compId').textContent = id;
+        document.getElementById('compName').textContent = name || 'No disponible';
+        document.getElementById('compEmail').textContent = email || 'No disponible';
+        document.getElementById('compDate').textContent = date;
+        document.getElementById('metaSubtitle').textContent = (file ? 'Comprobante generado correctamente' : 'No se encontró comprobante');
+
+        function formatFileUrl(fileParam) {
+            // si file ya es URL absoluta, retornar
+            if (!fileParam) return null;
+            try { const u = new URL(fileParam, location.origin); return u.href; } catch (e) { return `${location.origin}/${fileParam.replace(/^\/+/, '')}`; }
+        }
+
+        const url = formatFileUrl(file);
+
+        if (url) {
+            // intenta mostrar en iframe
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            iframe.loading = 'eager';
+            iframe.title = 'Comprobante Agronoré';
+            iframe.onload = () => {
+                if (pdfFallback) pdfFallback.style.display = 'none';
+            };
+            iframe.onerror = () => {
+                if (pdfFallback) pdfFallback.textContent = 'No fue posible previsualizar el archivo. Descárgalo con el botón.';
+            };
+            pdfContainer.innerHTML = '';
+            pdfContainer.appendChild(iframe);
+            downloadBtn.href = url;
+            openNewTab.href = url;
+            downloadBtn.setAttribute('download', `comprobante-${id}.pdf`);
+        } else {
+            pdfFallback.textContent = 'No se encontró comprobante. Si deberías tener uno, contáctanos en hola@agronare.com';
+            downloadBtn.style.display = 'none';
+            openNewTab.style.display = 'none';
+        }
+
+        function goBack() {
+            // vuelve a index
+            window.location.href = '/';
+        }
+    </script>
+</body>
+
+</html>
