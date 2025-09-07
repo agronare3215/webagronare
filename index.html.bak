@@ -48,9 +48,6 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css">
     <script>
         tailwind.config = {
             theme: {
@@ -405,11 +402,8 @@
                         method="POST">
                         <input name="nombre" required placeholder="Nombre"
                             class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1 sm:col-span-1">
-                        <select id="hero-cultivo" name="cultivo" aria-label="Cultivo" ...>
-
-                            class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus
-                            col-span-1"; =~ /id=/ ? ">" : ( =~ /aria-label=/ ? ">" : .q{ id="hero-cultivo"
-                            aria-label="Cultivo">"} )
+                        <select name="cultivo" required
+                            class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1">
                             <option value="">Cultivo</option>
                             <option value="berries">Berries</option>
                             <option value="maiz">Maíz</option>
@@ -803,7 +797,7 @@
                         <!-- MAP -->
                         <div class="mt-8">
                             <div id="mapa-ubicaciones" aria-label="Mapa con nuestras sucursales"></div>
-                            <div id="map-error" class="map-error">
+                            <div id="map-error" class="map-error" style="display:none;">
                                 No se pudo cargar el mapa. Verifica la configuración del servidor
                                 (<code>/maps-key</code>)
                                 o revisa la consola para más detalles.
@@ -893,7 +887,7 @@
                             <div id="calendly-container"
                                 class="calendly-wrapper calendly-desktop-visible calendly-expanded bg-white border border-gray-200">
                                 <!-- inner area where iframe will be appended -->
-                                <div id="calendly-inner" class="is-cad980f4"></div>
+                                <div id="calendly-inner" style="width:100%;"></div>
                             </div>
 
                         </div>
@@ -995,10 +989,10 @@
                             });
 
                             const content = `
-                <div class="is-1576afc6">
-                  <h3 class="is-02cc08d4">${entry.nombre}</h3>
-                  <div class="is-0ea25e0e">${entry.direccion}</div>
-                  <div class="is-b1ecc496">
+                <div style="min-width:220px;">
+                  <h3 style="margin:0 0 6px 0; font-size:16px;">${entry.nombre}</h3>
+                  <div style="font-size:14px; color:#444">${entry.direccion}</div>
+                  <div style="margin-top:8px;">
                     <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pos.lat() + ',' + pos.lng())}" target="_blank" rel="noopener">Indicaciones (Google Maps)</a>
                   </div>
                 </div>
@@ -1031,7 +1025,7 @@
             } catch (err) {
                 console.error('Error inicializando el mapa:', err);
                 const me = document.getElementById('map-error');
-                if (me) { me.style.display = 'block'; me.innerHTML += `<div class="is-2e3e6c78">Detalle: ${String(err)}</div>`; }
+                if (me) { me.style.display = 'block'; me.innerHTML += `<div style="margin-top:8px;color:#444">Detalle: ${String(err)}</div>`; }
             }
         }
 
@@ -1427,7 +1421,7 @@
                 .catch(err => {
                     console.error('No se pudo cargar Maps de forma segura:', err);
                     const me = document.getElementById('map-error');
-                    if (me) { me.style.display = 'block'; me.innerHTML += `<div class="is-2e3e6c78">Detalle técnico: ${String(err)}</div>`; }
+                    if (me) { me.style.display = 'block'; me.innerHTML += `<div style="margin-top:8px;color:#444">Detalle técnico: ${String(err)}</div>`; }
                 });
         })();
 
