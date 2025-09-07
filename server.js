@@ -1,117 +1,175 @@
 // server.js
-const express = require('express');
+require('dotenv').config();
 const path = require('path');
-const fs = require('fs');
+const express = require('express');
+const fs = require('fs-extra');
+const { v4: uuidv4 } = require('uuid');
+const sgMail = require('@sendgrid/mail');
 const nodemailer = require('nodemailer');
-
+const generatePdf = require('./generate_pdf'); // módulo que exporta generatePdfBuffer(html, options)
 const app = express();
+
 const PORT = process.env.PORT || 3000;
+const MAPS_KEY = process.env.GOOGLE_MAPS_KEY || '';
+const SENDGRID_KEY = process.env.SENDGRID_API_KEY || '';
+const SMTP_URL = process.env.SMTP_URL || ''; // optional: smtp://user:pass@smtp.host:port
+const FROM_EMAIL = process.env.FROM_EMAIL || 'no-reply@agronare.com';
 
-app.use(express.json({ limit: '1mb' }));
-// Servir archivos estáticos (index.html, assets/, gracias.html, etc.)
-app.use(express.static(path.join(__dirname)));
+if (SENDGRID_KEY) {
+    sgMail.setApiKey(SENDGRID_KEY);
+}
 
-// GET /gracias -> devuelve gracias.html
-app.get('/gracias', (req, res) => {
-    res.sendFile(path.join(__dirname, 'gracias.html'));
+// ensure folder for comprobantes
+const COMPROBANTES_DIR = path.join(__dirname, 'comprobantes');
+fs.ensureDirSync(COMPROBANTES_DIR);
+
+// middlewares
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ extended: true }));
+// Serve static (index.html, assets)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// route: maps key (secure-ish)
+app.get('/maps-key', (req, res) => {
+    if (!MAPS_KEY) return res.status(404).json({ ok: false, error: 'No maps key configured' });
+    // Opcionalmente: añadir checks de origen
+    res.json({ ok: true, key: MAPS_KEY });
 });
 
+// GET /gracias -> sirve gracias.html (busca en public/ o raíz)
+app.get('/gracias', (req, res) => {
+    // si lo guardaste en public/
+    const p = path.join(__dirname, 'public', 'gracias.html');
+    if (fs.existsSync(p)) return res.sendFile(p);
+    // fallback: busca en raíz
+    const p2 = path.join(__dirname, 'gracias.html');
+    if (fs.existsSync(p2)) return res.sendFile(p2);
+    return res.status(404).send('gracias.html no encontrado en el servidor.');
+});
+
+// Servir comprobantes (archivos PDF generados)
+app.use('/comprobantes', express.static(COMPROBANTES_DIR, { index: false }));
+
 /**
- * POST /api/confirm-appointment
- * Recibe payload desde Calendly (o cualquier cliente) en body.calendly_payload
- * Guarda registro en data/appointments.json y (opcional) envía correo de confirmación.
+ * POST /api/send-confirmation
+ * body: { name, email, phone, date, notes }  (JSON)
+ *
+ * Genera PDF y lo envía por correo. Devuelve { ok:true, url: '/comprobantes/xxx.pdf' }
  */
-app.post('/api/confirm-appointment', async (req, res) => {
+app.post('/api/send-confirmation', async (req, res) => {
     try {
-        const payload = req.body.calendly_payload || req.body || null;
-        if (!payload) return res.status(400).json({ ok: false, error: 'Missing payload' });
+        const { name, email, phone, date, notes } = req.body || {};
+        if (!email || !name) return res.status(400).json({ ok: false, error: 'name and email required' });
 
-        // Guardar registro localmente
-        const dataDir = path.join(__dirname, 'data');
-        if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-        const file = path.join(dataDir, 'appointments.json');
-        let list = [];
-        if (fs.existsSync(file)) {
-            try { list = JSON.parse(fs.readFileSync(file, 'utf8') || '[]'); } catch (e) { list = []; }
+        // build simple HTML template for PDF
+        const comprobanteId = `AGR-${Date.now()}-${uuidv4().slice(0, 6).toUpperCase()}`;
+        const html = `
+      <!doctype html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <title>Comprobante - ${comprobanteId}</title>
+          <style>
+            body { font-family: Arial, Helvetica, sans-serif; color:#08263b; padding:24px; }
+            .head { display:flex; align-items:center; gap:16px; }
+            .logo { width:86px; height:86px; border-radius:12px; background:#f0fff4; display:flex; align-items:center; justify-content:center; }
+            h1{ margin:0; font-size:18px }
+            .box{ margin-top:16px; border-radius:10px; padding:14px; border:1px solid #e6eef0; }
+            .row{ display:flex; justify-content:space-between; margin-top:10px; font-size:14px }
+            .notes{ margin-top:12px; font-size:13px; color:#334155 }
+            footer{ margin-top:28px; font-size:12px; color:#6b7280 }
+          </style>
+        </head>
+        <body>
+          <div class="head">
+            <div class="logo"><strong style="color:#16a34a">AGR</strong></div>
+            <div>
+              <h1>Comprobante Agronoré — ${comprobanteId}</h1>
+              <div style="color:#475569;font-size:13px">Generado: ${new Date().toLocaleString()}</div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="row"><strong>Nombre</strong><span>${escapeHtml(name)}</span></div>
+            <div class="row"><strong>Correo</strong><span>${escapeHtml(email)}</span></div>
+            <div class="row"><strong>Teléfono</strong><span>${escapeHtml(phone || '—')}</span></div>
+            <div class="row"><strong>Fecha propuesta</strong><span>${escapeHtml(date || '—')}</span></div>
+            <div class="notes"><strong>Notas:</strong><div>${escapeHtml(notes || '—')}</div></div>
+          </div>
+
+          <footer>Gracias por confiar en Agronoré — agronore.com</footer>
+        </body>
+      </html>
+    `;
+
+        // generate PDF buffer
+        const pdfBuffer = await generatePdf(html, { format: 'A4', margin: { top: '14mm', bottom: '14mm' } });
+
+        // save to file
+        const filename = `${Date.now()}-${comprobanteId}.pdf`;
+        const filePath = path.join(COMPROBANTES_DIR, filename);
+        await fs.writeFile(filePath, pdfBuffer);
+
+        // prepare mail
+        const fileBase64 = pdfBuffer.toString('base64');
+        const publicUrl = `/comprobantes/${encodeURIComponent(filename)}`;
+
+        // try send via SendGrid if available
+        if (SENDGRID_KEY) {
+            const msg = {
+                to: email,
+                from: FROM_EMAIL,
+                subject: `Tu comprobante — ${comprobanteId}`,
+                text: `Hola ${name}, adjuntamos tu comprobante (${comprobanteId}).`,
+                html: `<p>Hola ${name},</p><p>Adjuntamos tu comprobante <strong>${comprobanteId}</strong>. Puedes descargarlo también desde <a href="${publicUrl}">aquí</a>.</p><p>Saludos,<br>Agronoré</p>`,
+                attachments: [
+                    {
+                        content: fileBase64,
+                        filename,
+                        type: 'application/pdf',
+                        disposition: 'attachment'
+                    }
+                ]
+            };
+            await sgMail.send(msg);
+        } else if (SMTP_URL) {
+            // fallback to nodemailer
+            const transporter = nodemailer.createTransport(SMTP_URL);
+            await transporter.sendMail({
+                from: FROM_EMAIL,
+                to: email,
+                subject: `Tu comprobante — ${comprobanteId}`,
+                text: `Hola ${name}, adjuntamos tu comprobante (${comprobanteId}).`,
+                html: `<p>Hola ${name},</p><p>Adjuntamos tu comprobante <strong>${comprobanteId}</strong>. Puedes descargarlo también desde <a href="${publicUrl}">aquí</a>.</p>`,
+                attachments: [{ filename, content: pdfBuffer }]
+            });
+        } else {
+            // no mail provider configured -> respond OK but don't send
+            console.warn('No email provider configured (SENDGRID_API_KEY or SMTP_URL). Comprobante generado but not sent.');
         }
-        const record = { receivedAt: new Date().toISOString(), payload };
-        list.push(record);
-        fs.writeFileSync(file, JSON.stringify(list, null, 2), 'utf8');
 
-        // Extraer datos útiles del payload para el correo (lo más probable)
-        const invitee = payload?.invitee || payload?.invitee_information || payload?.invitee || null;
-        const event = payload?.event || payload?.scheduling || payload?.event || null;
-
-        const inviteeEmail = invitee?.email || invitee?.email_address || null;
-        const inviteeName = invitee?.name || (invitee?.first_name ? `${invitee.first_name} ${invitee.last_name || ''}`.trim() : 'Cliente');
-        const eventStart = event?.start_time || event?.start_at || (payload?.event?.start_time) || '';
-        const eventEnd = event?.end_time || event?.end_at || '';
-        const eventUri = event?.uri || event?.event_uri || '';
-
-        // Preparar cuerpo de correo
-        const subject = `Confirmación de cita — Agronoré`;
-        const textParts = [
-            `Hola ${inviteeName},`,
-            ``,
-            `Gracias por agendar una cita con Agronoré.`,
-            eventStart ? `Fecha/hora: ${eventStart}` : null,
-            eventUri ? `Detalle del evento: ${eventUri}` : null,
-            ``,
-            `Si necesitas cambiar la fecha o cancelar, por favor contáctanos: hola@agronare.com`,
-            ``,
-            `— Agronoré`
-        ].filter(Boolean).join('\n');
-
-        // Si no hay configuración SMTP, solo confirmamos almacenamiento
-        if (!process.env.SMTP_HOST || !process.env.SMTP_USER) {
-            console.log('--- Nueva cita registrada (SMTP no configurado) ---');
-            console.log('inviteeEmail:', inviteeEmail);
-            console.log('inviteeName:', inviteeName);
-            console.log('eventStart:', eventStart);
-            console.log('payload (guardado en data/appointments.json)');
-            return res.json({ ok: true, saved: true, note: 'SMTP not configured - saved locally' });
-        }
-
-        // Configurar transporter (Nodemailer)
-        const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT || '587', 10),
-            secure: (process.env.SMTP_SECURE === 'true') || false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
+        // respond with link that cliente (front) can use to open /gracias?file=comprobantes/filename&id=...
+        res.json({
+            ok: true,
+            id: comprobanteId,
+            url: publicUrl,
+            download: publicUrl,
+            name,
+            email
         });
-
-        // To: inviteeEmail (si existe) + ADMIN_EMAIL (si configurado)
-        const recipients = [];
-        if (inviteeEmail) recipients.push(inviteeEmail);
-        if (process.env.ADMIN_EMAIL) recipients.push(process.env.ADMIN_EMAIL);
-
-        const mailOptions = {
-            from: process.env.FROM_EMAIL || process.env.SMTP_USER,
-            to: recipients.join(','),
-            subject,
-            text: textParts,
-            html: `<p>Hola <strong>${inviteeName}</strong>,</p>
-             <p>Gracias por agendar una cita con Agronoré.</p>
-             ${eventStart ? `<p><strong>Fecha / hora:</strong> ${eventStart}</p>` : ''}
-             ${eventUri ? `<p><a href="${eventUri}" target="_blank" rel="noopener">Ver detalles del evento</a></p>` : ''}
-             <p>Si necesitas cambiar la fecha o cancelar, por favor contáctanos en <a href="mailto:hola@agronare.com">hola@agronare.com</a>.</p>
-             <p>— Agronoré</p>`
-        };
-
-        // Enviar correo
-        await transporter.sendMail(mailOptions);
-
-        return res.json({ ok: true, saved: true, emailed: true });
     } catch (err) {
-        console.error('Error en /api/confirm-appointment:', err);
-        return res.status(500).json({ ok: false, error: err.message });
+        console.error('Error /api/send-confirmation', err);
+        res.status(500).json({ ok: false, error: String(err.message || err) });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log('Serving static files from', path.join(__dirname));
-});
+function escapeHtml(str = '') {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/'/g, '&#039;');
+}
+
+app.listen(PORT, () => console.log(`Server running on ${PORT} — public served from /public`));

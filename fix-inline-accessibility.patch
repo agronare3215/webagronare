@@ -1,0 +1,142 @@
+*** Begin Patch
+*** Add File: assets/css/styles.css
++/* Custom styles to replace inline styles and provide accessible helpers */
++
++/* visually-hidden (fallback) */
++.sr-only {
++  position: absolute !important;
++  width: 1px;
++  height: 1px;
++  padding: 0;
++  margin: -1px;
++  overflow: hidden;
++  clip: rect(0, 0, 0, 0);
++  white-space: nowrap;
++  border: 0;
++}
++
++/* Infowindow content used by Google Maps markers */
++.infowindow {
++  min-width: 220px;
++  font-family: inherit;
++  color: #222;
++}
++.infowindow-title {
++  margin: 0 0 6px 0;
++  font-size: 16px;
++  font-weight: 600;
++}
++.infowindow-address {
++  font-size: 14px;
++  color: #444;
++}
++.infowindow-actions {
++  margin-top: 8px;
++}
++
++/* Small utility used by the map error box */
++.map-error {
++  margin-top: 12px;
++  background: #fff9f0;
++  border: 1px solid #fde3a7;
++  color: #7a5a00;
++  padding: 16px;
++  border-radius: 8px;
++}
++
++/* A minimal modal/fallback spacing (used por si hay inline styles elsewhere) */
++.modal-caption {
++  margin-top: 1rem;
++  color: white;
++  font-size: 1.25rem;
++  text-align: center;
++}
++
+*** End Patch
+*** Begin Patch
+*** Update File: index.html
+@@
+     <script src="https://cdn.tailwindcss.com"></script>
+ 
+     <script>
+         tailwind.config = {
+@@
+     </script>
+ 
++    <!-- Custom CSS for accessibility & replacements of inline styles -->
++    <link rel="stylesheet" href="assets/css/styles.css">
++
+     <style>
+@@
+         .calendly-closing {
+             transition: transform 420ms ease, opacity 420ms ease;
+             transform-origin: top center;
+             opacity: 0;
+             transform: translateY(-6px) scale(.995);
+         }
+     </style>
+ </head>
+ 
+ <body class="bg-gray-50 text-gray-800">
+@@
+                     <!-- Micro lead form (telefono + cultivo) -->
+                     <form id="hero-lead" class="grid sm:grid-cols-3 gap-3 mb-6" action="https://formspree.io/f/mzzakqk"
+                         method="POST">
+                         <input name="nombre" required placeholder="Nombre"
+                             class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1 sm:col-span-1">
+-                        <select name="cultivo" required
+-                            class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1">
++                        <!-- added id + aria-label so the select has an accessible name -->
++                        <select id="hero-cultivo" name="cultivo" aria-label="Cultivo" required
++                            class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1">
+                             <option value="">Cultivo</option>
+                             <option value="berries">Berries</option>
+                             <option value="maiz">Maíz</option>
+                             <option value="aguacate">Aguacate</option>
+                             <option value="otros">Otros</option>
+                         </select>
+                         <button type="submit"
+                             class="bg-secondary-500 text-white px-6 py-3 rounded-md font-bold">Solicitar
+                             diagnóstico</button>
+                     </form>
+@@
+                 SUCURSALES_PLUS.forEach(entry => {
+-                    geocoder.geocode({ address: entry.plus }, (results, status) => {
++                    geocoder.geocode({ address: entry.plus }, (results, status) => {
+                         if (status === 'OK' && results && results[0]) {
+                             const pos = results[0].geometry.location;
+                             const marker = new google.maps.Marker({
+                                 position: pos,
+                                 map,
+                                 title: entry.nombre,
+                                 icon: {
+                                     url: iconUrl,
+                                     scaledSize: new google.maps.Size(36, 36)
+                                 }
+                             });
+ 
+-                            const content = `
+-                                <div style="min-width:220px;">
+-                                  <h3 style="margin:0 0 6px 0; font-size:16px;">${entry.nombre}</h3>
+-                                  <div style="font-size:14px; color:#444">${entry.direccion}</div>
+-                                  <div style="margin-top:8px;">
+-                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pos.lat() + ',' + pos.lng())}" target="_blank" rel="noopener">Indicaciones (Google Maps)</a>
+-                                  </div>
+-                                </div>
+-                            `;
++                            // Use semantic classes (styles moved to assets/css/styles.css)
++                            const content = `
++                                <div class="infowindow">
++                                  <h3 class="infowindow-title">${entry.nombre}</h3>
++                                  <div class="infowindow-address">${entry.direccion}</div>
++                                  <div class="infowindow-actions">
++                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pos.lat() + ',' + pos.lng())}" target="_blank" rel="noopener">Indicaciones (Google Maps)</a>
++                                  </div>
++                                </div>
++                            `;
+ 
+                             marker.addListener('click', () => {
+                                 infowindow.setContent(content);
+                                 infowindow.open(map, marker);
+                             });
+*** End Patch

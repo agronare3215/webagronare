@@ -5,16 +5,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agronoré | Asesoría Agrícola Especializada para la Agricultura Moderna</title>
-
     <meta name="description"
         content="Transforma tu cosecha con Agronoré. Aumenta tus cosechas hasta un 40% con nuestros planes personalizados de agricultura de precisión. ¡Contáctanos y descubre cómo!" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph / Twitter -->
     <meta property="og:title" content="Agronoré — Asesoría Agrícola & Productos" />
     <meta property="og:description"
         content="Empoderamos al productor con asesoría técnica, fertilizantes y tecnología de precisión." />
     <meta property="og:image" content="/assets/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AgriculturalBusiness",
+    "name": "Agronoré",
+    "url": "https://www.agronare.com",
+    "logo": "https://www.agronare.com/assets/logo.png",
+    "telephone": "+524437924923",
+    "email": "hola@agronare.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Cda. de Hidalgo 305",
+      "addressLocality": "Copándaro",
+      "addressRegion": "Michoacán",
+      "postalCode": "58870"
+    }
+  }
+  </script>
 
     <!-- Calendly widget CSS -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
@@ -77,7 +96,6 @@
             width: 100%;
         }
 
-        /* image modal */
         .modal {
             display: none;
             position: fixed;
@@ -104,7 +122,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.9);
             }
 
             to {
@@ -125,7 +143,7 @@
             top: 1.5rem;
             right: 2.5rem;
             color: #fff;
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             font-weight: bold;
             transition: 0.3s;
             cursor: pointer;
@@ -184,7 +202,7 @@
         }
 
         .hero-section {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('assets/hero-bg.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/hero-bg.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -212,7 +230,6 @@
             display: block;
         }
 
-        /* badges + lazy styles */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -222,7 +239,6 @@
             background: #ecfdf5;
             color: #065f46;
             font-weight: 600;
-            font-size: 12px;
         }
 
         .lazy {
@@ -234,122 +250,68 @@
             opacity: 1;
         }
 
-        /* About section: image to the side on large screens */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
         @media (min-width: 1024px) {
-            .about-grid {
+            .acerca-grid {
+                display: grid;
                 grid-template-columns: 1fr 480px;
+                gap: 3rem;
+                align-items: center;
             }
         }
 
-        .about-image {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(12, 74, 43, 0.06);
-        }
-
-        /* "¿Por Qué Elegir Agronoré?" tweaks */
-        .advantages {
-            display: grid;
-            gap: 1.25rem;
-            grid-template-columns: 1fr;
-        }
-
-        @media (min-width: 768px) {
-            .advantages {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .advantages {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        .adv-card {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 18px rgba(17, 24, 39, 0.04);
-            text-align: center;
-        }
-
-        /* Calendly inline container styles */
         .calendly-wrapper {
-            border-radius: 12px;
+            transition: all 420ms cubic-bezier(.2, .9, .2, 1);
             overflow: hidden;
-            border: 1px solid #e6f0ea;
-            box-shadow: 0 8px 30px rgba(6, 95, 70, 0.06);
-            transition: max-height 360ms ease, opacity 360ms ease;
-            background: white;
+            border-radius: 0.75rem;
         }
 
-        /* Desktop: show inline automatically. Mobile: collapsed by default */
-        .calendly-container {
-            max-height: 900px;
-            opacity: 1;
-        }
-
-        .calendly-container.collapsed {
+        .calendly-collapsed {
             max-height: 0;
             opacity: 0;
+            transform: translateY(-10px);
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
-        /* On mobile start collapsed */
+        .calendly-expanded {
+            max-height: 1200px;
+            opacity: 1;
+            transform: translateY(0);
+            padding: 1rem;
+        }
+
+        .calendly-actions {
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
         @media (max-width: 767px) {
-            .calendly-container {
-                max-height: 0;
-                opacity: 0;
+            .calendly-desktop-visible {
+                display: none;
             }
-        }
 
-        .calendly-toggle-mobile {
-            display: none;
-        }
-
-        @media (max-width: 767px) {
-            .calendly-toggle-mobile {
+            .calendly-mobile-toggle {
                 display: inline-flex;
             }
         }
 
-        /* overlay / confirmation after booking */
-        .booking-overlay {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 60;
-            background: rgba(10, 10, 10, 0.5);
+        @media (min-width: 768px) {
+            .calendly-mobile-toggle {
+                display: none;
+            }
+
+            .calendly-desktop-visible {
+                display: block;
+            }
         }
 
-        .booking-card {
-            width: 96%;
-            max-width: 720px;
-            background: white;
-            padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(2, 6, 23, 0.35);
-            transform: translateY(12px);
+        .calendly-closing {
+            transition: transform 420ms ease, opacity 420ms ease;
+            transform-origin: top center;
             opacity: 0;
-            transition: transform 360ms cubic-bezier(.2, .9, .3, 1), opacity 360ms ease;
-        }
-
-        .booking-overlay.show {
-            display: flex;
-        }
-
-        .booking-card.show {
-            transform: none;
-            opacity: 1;
+            transform: translateY(-6px) scale(.995);
         }
     </style>
 </head>
@@ -463,10 +425,9 @@
             </div>
         </section>
 
-        <!-- ACERCA DE: ahora con image al costado en desktop -->
         <section id="acerca-de" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
-                <div class="about-grid">
+                <div class="acerca-grid">
                     <div class="animate-on-scroll">
                         <span class="text-primary-600 font-semibold tracking-wider">SOBRE
                             NOSOTROS</span>
@@ -482,13 +443,11 @@
                             necesitas para una producción
                             rentable y
                             sostenible.</p>
-                        <div class="space-y-4 mb-6">
+                        <div class="space-y-4">
                             <div class="flex items-start"><svg class="h-6 w-6 mr-3 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-
                                 </svg>
                                 <p class="text-gray-600"><strong class="text-gray-800">Misión:</strong> Empoderar a los
                                     agricultores con herramientas y conocimiento
@@ -497,10 +456,8 @@
                             </div>
                             <div class="flex items-start"><svg class="h-6 w-6 mr-3 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-
                                 </svg>
                                 <p class="text-gray-600"><strong class="text-gray-800">Visión:</strong> Liderar la
                                     transformación del sector agrícola en México,
@@ -509,90 +466,77 @@
                                     eficiente.</p>
                             </div>
                         </div>
-
-                        <!-- CTA rápido + Calendly mobile toggle -->
-                        <div class="flex gap-3 items-center">
-                            <a href="#contacto"
-                                class="bg-primary-600 text-white px-6 py-3 rounded-md font-bold text-lg shadow-lg hover:bg-primary-700 transition-colors tracking-wider">SOLICITA
-                                UN DIAGNÓSTICO</a>
-
-                            <!-- Mobile only: open inline calendar -->
-                            <button id="calendly-toggle-mobile"
-                                class="calendly-toggle-mobile bg-white border border-primary-600 text-primary-600 px-4 py-2 rounded-md font-semibold">
-                                Abrir calendario
-                            </button>
-                        </div>
                     </div>
 
-                    <!-- Imagen a la derecha en desktop -->
-                    <div class="about-image animate-on-scroll delay-100">
-                        <img data-src="assets/acerca.png" alt="Agrónomo revisando un cultivo" loading="lazy"
-                            class="w-full h-auto object-cover lazy">
+                    <div class="animate-on-scroll delay-100">
+                        <img data-src="assets/acerca.png" loading="lazy" alt="Agrónomo revisando un cultivo"
+                            class="rounded-xl shadow-lg lazy">
                     </div>
                 </div>
-            </div>
         </section>
 
-        <!-- Nuestra ventaja -->
         <section id="diferencia" class="py-20 md:py-28 bg-gray-50">
             <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto mb-12 animate-on-scroll">
+                <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
                     <span class="text-primary-600 font-semibold tracking-wider">NUESTRA
                         VENTAJA</span>
                     <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">¿Por Qué
                         Elegir Agronoré?</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Combinamos experiencia técnica, tecnología y
-                        compromiso en campo para ayudarte a aumentar rendimiento y
-                        rentabilidad con soluciones medibles.</p>
+                    <p class="text-lg text-gray-600">Con enfoque en datos, soporte continuo y tecnología, ayudamos a
+                        productores a aumentar rendimiento y rentabilidad.</p>
                 </div>
-                <div class="advantages">
-                    <div class="adv-card animate-on-scroll">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3 text-primary-600"
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                         </svg>
-                        <h3 class="font-bold text-lg mb-2">Resultados Medibles</h3>
-                        <p class="text-gray-600 text-sm">Nos enfocamos en datos para ofrecerte un retorno de inversión
-                            claro y tangible.</p>
+                        <h3 class="font-bold text-xl mb-2">Resultados Medibles</h3>
+                        <p class="text-gray-600">Nos enfocamos en datos para ofrecerte un
+                            retorno de inversión claro y
+                            tangible.</p>
                     </div>
-
-                    <div class="adv-card animate-on-scroll delay-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3 text-primary-600"
+                    <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll delay-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H17z" />
                         </svg>
-                        <h3 class="font-bold text-lg mb-2">Soporte Continuo</h3>
-                        <p class="text-gray-600 text-sm">Acompañamiento durante todo el ciclo de cultivo con asesoría en
-                            tiempo real.</p>
+                        <h3 class="font-bold text-xl mb-2">Soporte Continuo</h3>
+                        <p class="text-gray-600">Te acompañamos durante todo el ciclo de cultivo
+                            con asesoría en tiempo
+                            real.</p>
                     </div>
-
-                    <div class="adv-card animate-on-scroll delay-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3 text-primary-600"
+                    <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll delay-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
-                        <h3 class="font-bold text-lg mb-2">Productos de Calidad</h3>
-                        <p class="text-gray-600 text-sm">Insumos de alta eficiencia y soluciones de biocontrol
-                            certificadas.</p>
+                        <h3 class="font-bold text-xl mb-2">Productos de Calidad</h3>
+                        <p class="text-gray-600">Trabajamos con los mejores insumos del mercado
+                            para garantizar la
+                            eficacia.</p>
                     </div>
-
-                    <div class="adv-card animate-on-scroll delay-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3 text-primary-600"
+                    <div class="bg-white p-6 rounded-lg text-center shadow-md animate-on-scroll delay-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary-600"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <h3 class="font-bold text-lg mb-2">Tecnología de Vanguardia</h3>
-                        <p class="text-gray-600 text-sm">IA, drones y sensores para decisiones agrícolas más precisas.
-                        </p>
+                        <h3 class="font-bold text-xl mb-2">Tecnología de Vanguardia</h3>
+                        <p class="text-gray-600">Usamos IA, drones y sensores para tomar
+                            decisiones más inteligentes y
+                            precisas.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Servicios -->
         <section id="servicios" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -614,24 +558,26 @@
                     </div>
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md animate-on-scroll delay-100">
                         <h3 class="font-bold text-xl mb-2">Agricultura de Precisión</h3>
-                        <p class="text-gray-600">Implementamos drones, sensores y software de mapeo para una gestión
-                            eficiente.</p>
+                        <p class="text-gray-600">Implementamos tecnología de vanguardia como
+                            drones, sensores y software
+                            de mapeo para una gestión eficiente y precisa de tus recursos.
+                        </p>
                     </div>
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md animate-on-scroll delay-200">
                         <h3 class="font-bold text-xl mb-2">Venta de Insumos Especializados</h3>
-                        <p class="text-gray-600">Fertilizantes de alta eficiencia y soluciones de biocontrol.</p>
+                        <p class="text-gray-600">Te proveemos con los mejores productos del
+                            mercado, desde fertilizantes
+                            de alta eficiencia hasta soluciones de biocontrol de plagas.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Equipo -->
         <section id="equipo" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <div class="animate-on-scroll delay-100 order-2 lg:order-1"><img data-src="assets/equipo.jpg"
-                            alt="El equipo de Agronoré en el campo" loading="lazy" class="rounded-xl shadow-lg lazy">
-                    </div>
+                            alt="El equipo de Agronoré en el campo" class="rounded-xl shadow-lg lazy"></div>
                     <div class="animate-on-scroll order-1 lg:order-2">
                         <span class="text-primary-600 font-semibold tracking-wider">NUESTRO
                             EQUIPO</span>
@@ -648,7 +594,6 @@
             </div>
         </section>
 
-        <!-- Galería -->
         <section id="galeria" class="py-20 md:py-28 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -694,7 +639,6 @@
             </div>
         </section>
 
-        <!-- Testimonios -->
         <section id="testimonios" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -731,23 +675,18 @@
                         class="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-12 bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition"
                         aria-label="Testimonio anterior"><svg class="h-6 w-6 text-gray-700" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
-
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-
                         </svg></button>
                     <button id="next-testimonial"
                         class="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-12 bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition"
                         aria-label="Siguiente testimonio"><svg class="h-6 w-6 text-gray-700" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
-
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-
                         </svg></button>
                 </div>
             </div>
         </section>
 
-        <!-- Blog -->
         <section id="blog" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -763,8 +702,7 @@
                     <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden animate-on-scroll">
                         <img data-src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=80"
                             alt="Riego" loading="lazy" class="w-full h-48 object-cover lazy">
-                        <div class="p-6"><span class="text-sm text-gray-500">Septiembre 03,
-                                2025</span>
+                        <div class="p-6"><span class="text-sm text-gray-500">Septiembre 03, 2025</span>
                             <h3 class="font-bold text-xl my-2">5 Tecnologías que están
                                 revolucionando el riego</h3><a href="#"
                                 class="text-primary-600 font-semibold hover:underline">Leer más &rarr;</a>
@@ -773,8 +711,7 @@
                     <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100"><img
                             data-src="https://images.unsplash.com/photo-1492496913980-50133821932d?auto=format&fit=crop&w=800&q=80"
                             alt="Plagas" loading="lazy" class="w-full h-48 object-cover lazy">
-                        <div class="p-6"><span class="text-sm text-gray-500">Agosto 28,
-                                2025</span>
+                        <div class="p-6"><span class="text-sm text-gray-500">Agosto 28, 2025</span>
                             <h3 class="font-bold text-xl my-2">Manejo Integrado de Plagas:
                                 Guía para el productor</h3><a href="#"
                                 class="text-primary-600 font-semibold hover:underline">Leer más &rarr;</a>
@@ -783,8 +720,7 @@
                     <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden animate-on-scroll delay-200"><img
                             data-src="https://images.unsplash.com/photo-1594396417585-069c1a1286ad?auto=format&fit=crop&w=800&q=80"
                             alt="Suelo" loading="lazy" class="w-full h-48 object-cover lazy">
-                        <div class="p-6"><span class="text-sm text-gray-500">Agosto 15,
-                                2025</span>
+                        <div class="p-6"><span class="text-sm text-gray-500">Agosto 15, 2025</span>
                             <h3 class="font-bold text-xl my-2">La importancia del análisis
                                 de suelo antes de sembrar
                             </h3><a href="#" class="text-primary-600 font-semibold hover:underline">Leer más &rarr;</a>
@@ -794,7 +730,7 @@
             </div>
         </section>
 
-        <!-- CONTACTO: con Calendly inline embebido -->
+        <!-- CONTACTO + Calendly inline -->
         <section id="contacto" class="py-20 md:py-28 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -803,9 +739,9 @@
                             Hoy</span></h2>
                     <p class="text-lg text-gray-600">Completa el formulario o contáctanos
                         directamente. Un experto te
-                        atenderá en
-                        menos de 24 horas.</p>
+                        atenderá en menos de 24 horas.</p>
                 </div>
+
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     <div class="animate-on-scroll">
                         <div class="space-y-6 text-lg">
@@ -813,59 +749,45 @@
                             </h3>
                             <div class="flex items-start"><svg class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-
                                 </svg>
                                 <p class="text-gray-600">Cda. de Hidalgo 305, Copándaro,
                                     Mich.</p>
                             </div>
                             <div class="flex items-start"><svg class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-
                                 </svg>
                                 <p class="text-gray-600">Guadalupe Victoria 1962, 61620
                                     Cuanajo, Mich.</p>
                             </div>
                             <div class="flex items-start"><svg class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-
                                 </svg>
-                                <p class="text-gray-600">59700, El Capricho, 59700
-                                    Zamora de Hidalgo, Mich.</p>
+                                <p class="text-gray-600">El Capricho, Zamora de Hidalgo, Mich.</p>
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900 pt-6">Información de
                                 Contacto</h3>
                             <div class="flex items-start"><svg class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-
                                 </svg><a id="email-contact" href="mailto:hola@agronare.com"
                                     class="text-gray-600 hover:text-primary-600">hola@agronare.com</a></div>
                             <div class="flex items-start"><svg class="h-6 w-6 mr-4 mt-1 text-primary-600 flex-shrink-0"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-
                                 </svg>
                                 <p class="text-gray-600">Lunes a Viernes: 9:00 AM - 6:00
                                     PM</p>
@@ -876,13 +798,13 @@
                         <div class="mt-8">
                             <div id="mapa-ubicaciones" aria-label="Mapa con nuestras sucursales"></div>
                             <div id="map-error" class="map-error" style="display:none;">
-                                No se pudo cargar el mapa. Verifica la configuración del
-                                servidor (<code>/maps-key</code>) o revisa la consola para más detalles.
+                                No se pudo cargar el mapa. Verifica la configuración del servidor
+                                (<code>/maps-key</code>)
+                                o revisa la consola para más detalles.
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right column: form + Calendly -->
                     <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg animate-on-scroll delay-100">
                         <form id="contact-form" class="space-y-6" action="https://formspree.io/f/mzzakqk" method="POST">
                             <input type="hidden" name="utm_source" id="utm_source">
@@ -916,7 +838,7 @@
                                     class="block text-sm font-medium text-gray-700 mb-1">¿Cuál es tu mayor
                                     desafío? *</label><textarea id="contacto-mensaje" name="mensaje" required
                                     class="w-full px-4 py-3 rounded-lg border border-gray-300 min-h-[120px] focus:outline-none focus:ring-2 input-focus"
-                                    placeholder="Describe con detalle tu problema..."></textarea>
+                                    placeholder="Describe con detalle tu problema para recibir una sugerencia de nuestra IA. Ej: Mis aguacates tienen manchas negras..."></textarea>
                             </div>
 
                             <div class="text-center"><button type="button" id="gemini-suggester-btn"
@@ -947,35 +869,27 @@
                                 PARA DIAGNÓSTICO COMPLETO</button>
                         </form>
 
-                        <!-- SMALL booking form + Calendly inline (desktop inline, mobile collapsed) -->
-                        <div class="mt-6">
-                            <h4 class="font-semibold mb-3">Agenda una visita</h4>
-                            <form id="booking-form" class="grid grid-cols-1 gap-3 mb-3" onsubmit="return false;">
-                                <input id="booking-nombre" placeholder="Nombre" class="px-3 py-2 border rounded-md">
-                                <input id="booking-telefono" placeholder="Teléfono" class="px-3 py-2 border rounded-md">
-                                <select id="booking-sucursal" class="px-3 py-2 border rounded-md">
-                                    <option value="">Sucursal preferida</option>
-                                    <option>Copándaro</option>
-                                    <option>Cuanajo</option>
-                                    <option>Zamora</option>
-                                </select>
-                                <div class="flex gap-2">
-                                    <button id="calendly-open-btn"
-                                        class="flex-1 bg-primary-600 text-white px-4 py-2 rounded-md font-semibold">Abrir
-                                        Calendario</button>
-                                    <button id="calendly-open-mobile"
-                                        class="calendly-toggle-mobile bg-white border border-primary-600 text-primary-600 px-4 py-2 rounded-md font-semibold">Abrir
+                        <!-- Calendly controls -->
+                        <div class="mt-8">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-lg">Agenda una visita con nuestro asesor</h4>
+                                <div class="calendly-actions">
+                                    <button id="toggle-calendly-inline" aria-expanded="false"
+                                        class="calendly-mobile-toggle bg-primary-600 text-white px-4 py-2 rounded-md text-sm">Abrir
                                         calendario</button>
-                                </div>
-                            </form>
-
-                            <!-- Calendly inline container -->
-                            <div id="calendly-wrapper" class="calendly-wrapper mt-4">
-                                <div id="calendly-container" class="calendly-container">
-                                    <!-- Calendly will render here -->
-                                    <div id="calendly-inline" style="min-height:640px;"></div>
+                                    <button id="open-calendly-popup"
+                                        class="bg-white border border-primary-600 text-primary-600 px-4 py-2 rounded-md text-sm hidden md:inline-flex">Abrir
+                                        en popup</button>
                                 </div>
                             </div>
+
+                            <!-- Inline Calendly container -->
+                            <div id="calendly-container"
+                                class="calendly-wrapper calendly-desktop-visible calendly-expanded bg-white border border-gray-200">
+                                <!-- inner area where iframe will be appended -->
+                                <div id="calendly-inner" style="width:100%;"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -1019,10 +933,8 @@
         rel="noopener noreferrer" aria-label="Contactar por WhatsApp"
         class="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-110 whatsapp-float">
         <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-
             <path
                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.076-.15-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.478 0 1.46.732 2.883.83 3.032.099.148 1.354 2.059 3.256 2.876.909.389 1.653.629 2.002.777.704.297 1.356.21 1.958-.075.586-.28 1.652-.966 1.898-1.898.246-.93 0-1.722-.074-1.995z" />
-
         </svg>
     </a>
 
@@ -1032,27 +944,24 @@
         <div id="modalCaption" class="modal-caption"></div>
     </div>
 
-    <!-- Calendly widget script -->
+    <!-- Calendly widget script (compatibilidad) -->
     <script src="https://assets.calendly.com/assets/external/widget.js" defer></script>
 
+    <!-- ---------- SCRIPTS: lógica, mejoras y carga segura de Maps ---------- -->
     <script>
         // ------ CONFIG
         const EMAIL_CONTACT = 'hola@agronare.com';
-
-        // Calendly URL: ya la reemplacé por la que me pediste antes
         const CALENDLY_URL = 'https://calendly.com/agronore/visita-30min';
-
-        const SUCURSALES = [
-            { nombre: 'Sucursal Copándaro', lat: 19.89254, lng: -101.21394, direccion: 'Cda. de Hidalgo 305, Copándaro, Mich.' },
-            { nombre: 'Sucursal Cuanajo', lat: 19.48533, lng: -101.50902, direccion: 'Guadalupe Victoria 1962, 61620 Cuanajo, Mich.' },
-            { nombre: 'Sucursal Zamora', lat: 19.988688, lng: -102.285608, direccion: 'El Capricho, Zamora de Hidalgo, Mich.' }
+        const SUCURSALES_PLUS = [
+            { nombre: 'Sucursal Zamora', plus: '2Q4G+QJ Zamora de Hidalgo, Michoacán', direccion: 'El Capricho, Zamora de Hidalgo, Mich.' },
+            { nombre: 'Sucursal Cuanajo', plus: 'FFXV+F9 Cuanajo, Michoacán', direccion: 'Guadalupe Victoria 1962, Cuanajo, Mich.' },
+            { nombre: 'Sucursal Copándaro', plus: 'VQVJ+QX Copándaro de Galeana, Michoacán', direccion: 'Cda. de Hidalgo 305, Copándaro, Mich.' }
         ];
 
-        // initMap function (Google Maps) - unchanged
+        // ---------- MAPS INIT ----------
         function initMap() {
             try {
-                const bounds = new google.maps.LatLngBounds();
-
+                if (!window.google || !window.google.maps) throw new Error('Google Maps JS no disponible');
                 const map = new google.maps.Map(document.getElementById('mapa-ubicaciones'), {
                     center: { lat: 19.78885, lng: -101.66952 },
                     zoom: 8,
@@ -1063,60 +972,72 @@
                 });
 
                 const infowindow = new google.maps.InfoWindow();
+                const geocoder = new google.maps.Geocoder();
+
                 const isRetina = (window.devicePixelRatio && window.devicePixelRatio > 1);
                 const iconUrl = isRetina ? 'assets/marker-green-@2x.png' : 'assets/marker-green.png';
 
-                SUCURSALES.forEach(s => {
-                    const pos = { lat: Number(s.lat), lng: Number(s.lng) };
-                    const marker = new google.maps.Marker({
-                        position: pos,
-                        map,
-                        title: s.nombre,
-                        icon: {
-                            url: iconUrl,
-                            scaledSize: new google.maps.Size(36, 36)
+                SUCURSALES_PLUS.forEach(entry => {
+                    geocoder.geocode({ address: entry.plus }, (results, status) => {
+                        if (status === 'OK' && results && results[0]) {
+                            const pos = results[0].geometry.location;
+                            const marker = new google.maps.Marker({
+                                position: pos,
+                                map,
+                                title: entry.nombre,
+                                icon: { url: iconUrl, scaledSize: new google.maps.Size(36, 36) }
+                            });
+
+                            const content = `
+                <div style="min-width:220px;">
+                  <h3 style="margin:0 0 6px 0; font-size:16px;">${entry.nombre}</h3>
+                  <div style="font-size:14px; color:#444">${entry.direccion}</div>
+                  <div style="margin-top:8px;">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pos.lat() + ',' + pos.lng())}" target="_blank" rel="noopener">Indicaciones (Google Maps)</a>
+                  </div>
+                </div>
+              `;
+
+                            marker.addListener('click', () => { infowindow.setContent(content); infowindow.open(map, marker); });
+                            try {
+                                map.fitBounds((window._sucursalBounds = window._sucursalBounds || new google.maps.LatLngBounds()).extend(pos));
+                            } catch (_) { }
+                        } else {
+                            console.warn('Geocode fallo para', entry.plus, status);
+                            const me = document.getElementById('map-error');
+                            if (me) me.style.display = 'block';
                         }
                     });
-
-                    const content = `
-                        <div style="min-width:200px;">
-                          <h3 style="margin:0 0 6px 0; font-size:16px;">${s.nombre}</h3>
-                          <div style="font-size:14px; color:#444">${s.direccion}</div>
-                          <div style="margin-top:8px;">
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(s.lat + ',' + s.lng)}" target="_blank" rel="noopener">Indicaciones (Google Maps)</a>
-                          </div>
-                        </div>
-                    `;
-
-                    marker.addListener('click', () => {
-                        infowindow.setContent(content);
-                        infowindow.open(map, marker);
-                    });
-
-                    bounds.extend(pos);
                 });
 
-                map.fitBounds(bounds);
-                const MAX_ZOOM_AFTER_FIT = 15;
-                google.maps.event.addListenerOnce(map, 'idle', function () {
-                    if (map.getZoom() > MAX_ZOOM_AFTER_FIT) map.setZoom(MAX_ZOOM_AFTER_FIT);
-                });
+                setTimeout(() => {
+                    try {
+                        if (window._sucursalBounds && window._sucursalBounds.getNorthEast) {
+                            map.fitBounds(window._sucursalBounds);
+                            const MAX_ZOOM_AFTER_FIT = 15;
+                            google.maps.event.addListenerOnce(map, 'idle', function () { if (map.getZoom() > MAX_ZOOM_AFTER_FIT) map.setZoom(MAX_ZOOM_AFTER_FIT); });
+                        }
+                    } catch (err) { console.warn('fitBounds fallback', err); }
+                }, 800);
 
-                document.getElementById('map-error').style.display = 'none';
+                const me = document.getElementById('map-error');
+                if (me) me.style.display = 'none';
             } catch (err) {
                 console.error('Error inicializando el mapa:', err);
-                document.getElementById('map-error').style.display = 'block';
+                const me = document.getElementById('map-error');
+                if (me) { me.style.display = 'block'; me.innerHTML += `<div style="margin-top:8px;color:#444">Detalle: ${String(err)}</div>`; }
             }
         }
 
         // ------- UI & interactions -------
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializar emails/año
-            document.getElementById('email-contact').textContent = EMAIL_CONTACT;
-            document.getElementById('email-contact').href = `mailto:${EMAIL_CONTACT}`;
-            document.getElementById('email-footer').textContent = EMAIL_CONTACT;
-            document.getElementById('email-footer').href = `mailto:${EMAIL_CONTACT}`;
-            document.getElementById('year').textContent = new Date().getFullYear();
+            const emailContactEl = document.getElementById('email-contact');
+            const emailFooterEl = document.getElementById('email-footer');
+            if (emailContactEl) { emailContactEl.textContent = EMAIL_CONTACT; emailContactEl.href = `mailto:${EMAIL_CONTACT}`; }
+            if (emailFooterEl) { emailFooterEl.textContent = EMAIL_CONTACT; emailFooterEl.href = `mailto:${EMAIL_CONTACT}`; }
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
 
             // Menu mobile
             const menuButton = document.getElementById('menu-button');
@@ -1131,31 +1052,33 @@
                 menuButton.setAttribute('aria-expanded', isActive);
                 mobileMenu.setAttribute('aria-hidden', !isActive);
             };
-            menuButton.addEventListener('click', toggleMenu);
-            mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu));
+            if (menuButton) { menuButton.addEventListener('click', toggleMenu); }
+            if (mobileMenu) { mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu)); }
 
-            // Image modal
+            // Modal de imagenes
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const modalCaption = document.getElementById('modalCaption');
             window.openModal = (src, caption) => {
+                if (!modal) return;
                 modal.style.display = 'flex';
-                modalImage.src = src;
-                modalCaption.textContent = caption;
+                if (modalImage) modalImage.src = src;
+                if (modalCaption) modalCaption.textContent = caption;
                 document.body.style.overflow = 'hidden';
                 modal.setAttribute('aria-hidden', 'false');
             };
             window.closeModal = () => {
+                if (!modal) return;
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 modal.setAttribute('aria-hidden', 'true');
             };
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-            // Scroll animations
+            // IntersectionObserver para animar secciones
             const scrollObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.12 });
+            }, { threshold: 0.1 });
             document.querySelectorAll('.animate-on-scroll').forEach(el => scrollObserver.observe(el));
 
             // Scrollspy / header shadow
@@ -1187,257 +1110,105 @@
                 });
             });
 
-            // Testimonials
+            // Testimonios slider
             const testimonialSlides = document.querySelectorAll('.testimonial-slide');
             let currentTestimonial = 0;
-            const showTestimonial = (index) => {
-                testimonialSlides.forEach((slide, i) => slide.classList.toggle('active', i === index));
-            };
-            document.getElementById('next-testimonial').addEventListener('click', () => {
-                currentTestimonial = (currentTestimonial + 1) % testimonialSlides.length;
-                showTestimonial(currentTestimonial);
-            });
-            document.getElementById('prev-testimonial').addEventListener('click', () => {
-                currentTestimonial = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
-                showTestimonial(currentTestimonial);
-            });
+            const showTestimonial = (index) => { testimonialSlides.forEach((slide, i) => slide.classList.toggle('active', i === index)); };
+            const nextTestBtn = document.getElementById('next-testimonial');
+            const prevTestBtn = document.getElementById('prev-testimonial');
+            if (nextTestBtn) nextTestBtn.addEventListener('click', () => { currentTestimonial = (currentTestimonial + 1) % testimonialSlides.length; showTestimonial(currentTestimonial); });
+            if (prevTestBtn) prevTestBtn.addEventListener('click', () => { currentTestimonial = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length; showTestimonial(currentTestimonial); });
 
-            // Gemini suggester (left as placeholder)
+            // Message modal helpers
+            const msgModal = document.getElementById('messageModal');
+            window.showMessageModal = (message, title = "Aviso") => {
+                if (!msgModal) return;
+                document.getElementById('messageModalTitle').textContent = title;
+                document.getElementById('messageModalText').textContent = message;
+                msgModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            };
+            window.closeMessageModal = () => {
+                if (!msgModal) return;
+                msgModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            // Gemini suggester UI (kept simple)
             const geminiBtn = document.getElementById('gemini-suggester-btn');
             const cropInput = document.getElementById('contacto-cultivo');
             const messageInput = document.getElementById('contacto-mensaje');
             const geminiResponseContainer = document.getElementById('gemini-response-container');
             const geminiResponseText = document.getElementById('gemini-response-text');
             const geminiLoader = document.getElementById('gemini-loader');
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // --- NOTA: NO colocar la API key de Gemini en el cliente.
+            // Implementa un endpoint seguro en tu servidor que haga la llamada a la Generative API
+            // y desde aqui hagas fetch('/generate-suggestion', { body: JSON.stringify({...}) })
+            const geminiProxyUrl = '/generate-suggestion'; // tu servidor debe exponerlo (recomendado)
+
             async function fetchWithRetry(url, options, retries = 3) {
                 for (let i = 0; i < retries; i++) {
                     try {
                         const response = await fetch(url, options);
-                        if (response.ok) return response;
+                        if (response.ok) { return response; }
                         else if (response.status === 429) {
                             const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                            await new Promise(r => setTimeout(r, delay));
-                        } else throw new Error(`HTTP error! status: ${response.status}`);
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        } else { throw new Error(`HTTP error! status: ${response.status}`); }
                     } catch (error) {
                         if (i === retries - 1) throw error;
                         const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                        await new Promise(r => setTimeout(r, delay));
+                        await new Promise(resolve => setTimeout(resolve, delay));
                     }
                 }
             }
-            geminiBtn.addEventListener('click', async () => {
-                const cultivo = cropInput?.value;
-                const mensaje = messageInput?.value?.trim();
-                if (!cultivo || !mensaje) {
-                    showMessageModal("Por favor, selecciona un cultivo y describe tu problema para que la IA pueda ayudarte.", "Campos Requeridos");
-                    return;
-                }
-                geminiBtn.disabled = true;
-                geminiBtn.classList.add('opacity-50');
-                geminiResponseContainer.classList.remove('hidden');
-                geminiLoader.classList.remove('hidden');
-                geminiResponseText.textContent = '';
-                const systemPrompt = "Actúa como un agrónomo experto. Tu objetivo es proporcionar un diagnóstico profesional y una sugerencia de acción inicial para un agricultor, basado en el cultivo y el problema que describe. La respuesta debe ser concisa, en un solo párrafo, y enfocada en soluciones. No te excedas en el texto. La sugerencia debe ser profesional y realista.";
-                const userQuery = `Problema con el cultivo de ${cultivo}: "${mensaje}"`;
-                const payload = { contents: [{ parts: [{ text: userQuery }] }], systemInstruction: { parts: [{ text: systemPrompt }] }, generationConfig: { temperature: 0.4 } };
-                try {
-                    const response = await fetchWithRetry(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response) throw new Error("Fallo en la conexión después de múltiples reintentos.");
-                    const result = await response.json();
-                    const aiText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    geminiResponseText.textContent = aiText || 'Lo sentimos, no pudimos generar una sugerencia. Por favor, intenta de nuevo más tarde.';
-                } catch (error) {
-                    console.error('Error fetching from Gemini API:', error);
-                    geminiResponseText.textContent = 'Ocurrió un error al conectar con el asistente. Por favor, revisa tu conexión a internet e inténtalo de nuevo.';
-                } finally {
-                    geminiLoader.classList.add('hidden');
-                    geminiBtn.disabled = false;
-                    geminiBtn.classList.remove('opacity-50');
-                }
-            });
 
-            // Booking form & Calendly logic
-            const bookingForm = document.getElementById('booking-form');
-            const bookingNombre = document.getElementById('booking-nombre');
-            const bookingTelefono = document.getElementById('booking-telefono');
-            const bookingSucursal = document.getElementById('booking-sucursal');
-            const calendlyBtn = document.getElementById('calendly-open-btn');
-            const calendlyOpenMobileBtn = document.getElementById('calendly-open-mobile');
-            const calendlyToggleMobile = document.getElementById('calendly-toggle-mobile');
-            const calendlyContainer = document.getElementById('calendly-inline');
-            const calendlyWrapper = document.getElementById('calendly-wrapper');
-            const calendlyContainerOuter = document.getElementById('calendly-container');
+            if (geminiBtn) {
+                geminiBtn.addEventListener('click', async () => {
+                    const cultivo = cropInput?.value;
+                    const mensaje = messageInput?.value.trim();
 
-            let calendlyInitialized = false;
-            // Helper: prefill object for Calendly
-            function buildPrefill() {
-                const name = bookingNombre?.value || document.getElementById('contacto-nombre')?.value || '';
-                const phone = bookingTelefono?.value || document.getElementById('contacto-telefono')?.value || '';
-                const sucursal = bookingSucursal?.value || '';
-                const prefill = {
-                    name,
-                    // Calendly uses email and custom answers depending on event setup — here we only set name
-                    // custom answers can be included as a1,a2 depending on your event configuration
-                    // Example: prefill: { name: 'Juan', email: 'x@x', a1: 'Sucursal Cop' }
-                };
-                // Add custom fields if needed:
-                if (sucursal) prefill.a1 = sucursal;
-                if (phone) prefill.a2 = phone;
-                return prefill;
-            }
-
-            function initCalendlyInline(prefill = {}) {
-                if (!window.Calendly || calendlyInitialized) return;
-                // Calendly provides initInlineWidget - pass parentElement (node) and url + prefill
-                try {
-                    window.Calendly.initInlineWidget({
-                        url: CALENDLY_URL,
-                        parentElement: calendlyContainer,
-                        prefill: prefill,
-                        utm: {}
-                    });
-                    calendlyInitialized = true;
-                } catch (err) {
-                    console.warn('No se pudo inicializar Calendly inline:', err);
-                }
-            }
-
-            // Show/hide calendar container with class toggling
-            function openInlineCalendar() {
-                calendlyContainerOuter.classList.remove('collapsed');
-                // init when opening
-                initCalendlyInline(buildPrefill());
-            }
-            function closeInlineCalendar() {
-                // hide container visually
-                calendlyContainerOuter.classList.add('collapsed');
-                // remove iframe to free memory (optional)
-                if (calendlyInitialized && calendlyContainer) {
-                    // remove children to re-initialize next time
-                    calendlyContainer.innerHTML = '';
-                    calendlyInitialized = false;
-                }
-            }
-
-            // Desktop button -> open inline and scroll
-            calendlyBtn?.addEventListener('click', (e) => {
-                e.preventDefault();
-                openInlineCalendar();
-                setTimeout(() => {
-                    calendlyContainerOuter.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 180);
-            });
-
-            // Mobile toggle (small button)
-            calendlyOpenMobileBtn?.addEventListener('click', (e) => {
-                e.preventDefault();
-                // if collapsed -> open, else -> close
-                const isCollapsed = calendlyContainerOuter.classList.contains('collapsed');
-                if (isCollapsed) {
-                    openInlineCalendar();
-                    // ensure visible on mobile
-                    window.scrollTo({ top: document.getElementById('contacto').offsetTop - 80, behavior: 'smooth' });
-                } else {
-                    closeInlineCalendar();
-                }
-            });
-
-            // Another mobile location (header-level "Abrir calendario")
-            calendlyToggleMobile?.addEventListener('click', (e) => {
-                e.preventDefault();
-                const isCollapsed = calendlyContainerOuter.classList.contains('collapsed');
-                if (isCollapsed) {
-                    openInlineCalendar();
-                    window.scrollTo({ top: document.getElementById('acerca-de').offsetTop - 80, behavior: 'smooth' });
-                } else {
-                    closeInlineCalendar();
-                }
-            });
-
-            // Listen postMessage events from Calendly for 'calendly.event_scheduled'
-            window.addEventListener('message', async (e) => {
-                // Basic origin check (Calendly origin can vary; we keep check permissive but inspect payload)
-                try {
-                    const data = e.data;
-                    if (!data) return;
-                    if (data.event && data.event === 'calendly.event_scheduled') {
-                        // Payload info may exist at data.payload
-                        const payload = data.payload || {};
-                        // Show overlay + then redirect to /gracias
-                        const invitee = payload?.invitee || payload?.invitee || {};
-                        const name = invitee?.name || '';
-                        const email = invitee?.email || invitee?.email_address || '';
-                        const when = payload?.event?.start_time || payload?.event?.start_at || payload?.event?.start || '';
-                        // Send payload to your backend so it can send email / store entry
-                        try {
-                            await fetch('/api/confirm-appointment', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ calendly_payload: payload })
-                            });
-                        } catch (err) {
-                            console.warn('No se pudo notificar al backend:', err);
-                        }
-
-                        // Close the inline calendar UI
-                        closeInlineCalendar();
-
-                        // show booking transition overlay
-                        showBookingOverlay({ name, email, when });
+                    if (!cultivo || !mensaje) {
+                        showMessageModal("Por favor, selecciona un cultivo y describe tu problema para que la IA pueda ayudarte.", "Campos Requeridos");
+                        return;
                     }
-                } catch (err) {
-                    console.error('Error procesando mensaje de Calendly', err);
-                }
-            }, false);
 
-            // Booking overlay: show brief transition then redirect to /gracias with params
-            const bookingOverlay = document.createElement('div');
-            bookingOverlay.className = 'booking-overlay';
-            bookingOverlay.id = 'booking-overlay';
-            bookingOverlay.innerHTML = `
-                <div class="booking-card" role="status" aria-live="polite">
-                    <h3 id="booking-overlay-title" class="text-2xl font-bold text-gray-900 mb-2">Cita confirmada</h3>
-                    <p id="booking-overlay-body" class="text-gray-600 mb-4">Hemos guardado la cita y te enviaremos un correo con los detalles.</p>
-                    <div style="display:flex;gap:12px;justify-content:center">
-                      <a id="booking-overlay-btn" class="btn-primary" style="background:#16a34a;color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700">Volver al inicio</a>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(bookingOverlay);
+                    geminiBtn.disabled = true;
+                    geminiBtn.classList.add('opacity-50');
+                    geminiResponseContainer.classList.remove('hidden');
+                    geminiLoader.classList.remove('hidden');
+                    geminiResponseText.textContent = '';
+                    geminiResponseContainer.scrollIntoView({ behavior: 'smooth' });
 
-            function showBookingOverlay({ name = '', email = '', when = '' } = {}) {
-                bookingOverlay.classList.add('show');
-                const card = bookingOverlay.querySelector('.booking-card');
-                setTimeout(() => card.classList.add('show'), 20);
-                // set texts
-                const body = document.getElementById('booking-overlay-body');
-                body.textContent = 'Gracias. Se confirmó tu cita. Te enviaremos la confirmación por correo.';
-                // button redirect
-                const btn = document.getElementById('booking-overlay-btn');
-                btn.onclick = () => { window.location.href = '/'; };
+                    const systemPrompt = "Actúa como un agrónomo experto. Tu objetivo es proporcionar un diagnóstico profesional y una sugerencia de acción inicial para un agricultor, basado en el cultivo y el problema que describe. La respuesta debe ser concisa, en un solo párrafo, y enfocada en soluciones. No te excedas en el texto. La sugerencia debe ser profesional y realista.";
+                    const userQuery = `Problema con el cultivo de ${cultivo}: "${mensaje}"`;
 
-                // After a short transition, redirect to /gracias with params
-                setTimeout(() => {
-                    // Build querystring safely
-                    const params = new URLSearchParams();
-                    if (name) params.set('name', name);
-                    if (email) params.set('contact', email || '');
-                    if (when) params.set('when', when);
-                    window.location.href = '/gracias' + (params.toString() ? ('?' + params.toString()) : '');
-                }, 1400); // 1.4s to show the overlay then redirect
-            }
+                    // Payload que debe recibir tu servidor (proxy)
+                    const payload = { prompt: userQuery, system: systemPrompt, temperature: 0.4 };
 
-            // Booking manual submit (keeps manual flow)
-            if (bookingForm) {
-                bookingForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    showMessageModal('Gracias. Hemos recibido tu solicitud de visita. Te contactaremos para confirmar la fecha y hora.', 'Solicitud recibida');
+                    try {
+                        // Llamamos a tu servidor que a su vez llama a la API generativa (evita exponer clave)
+                        const response = await fetchWithRetry(geminiProxyUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response) throw new Error("Fallo en la conexión después de múltiples reintentos.");
+                        const result = await response.json();
+                        const aiText = result?.text || result?.suggestion || null;
+
+                        if (aiText) geminiResponseText.textContent = aiText;
+                        else geminiResponseText.textContent = 'Lo sentimos, no pudimos generar una sugerencia. Por favor, intenta de nuevo más tarde.';
+                    } catch (error) {
+                        console.error('Error fetching from Gemini proxy:', error);
+                        geminiResponseText.textContent = 'Ocurrió un error al conectar con el asistente. Por favor, revisa tu conexión a internet e inténtalo de nuevo.';
+                    } finally {
+                        geminiLoader.classList.add('hidden');
+                        geminiBtn.disabled = false;
+                        geminiBtn.classList.remove('opacity-50');
+                    }
                 });
             }
 
@@ -1448,38 +1219,163 @@
                 if (el) el.value = urlParams.get(k) || '';
             });
 
-            // Lazy image loader
-            const lazyImgs = document.querySelectorAll('img.lazy');
-            const onIntersect = (entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.add('loaded');
-                        img.addEventListener('load', () => img.classList.add('loaded'));
-                        obs.unobserve(img);
-                    }
-                })
-            };
-            const imgObserver = new IntersectionObserver(onIntersect, { rootMargin: '200px' });
-            lazyImgs.forEach(img => imgObserver.observe(img));
-
-            // Initialize Calendly inline on desktop only (if available)
-            setTimeout(() => {
-                // if desktop (min-width >= 768) open inline by default (unless already collapsed by CSS)
-                if (window.innerWidth >= 768) {
-                    // remove collapsed class if present
-                    calendlyContainerOuter.classList.remove('collapsed');
-                    // initialize calendly
-                    initCalendlyInline(buildPrefill());
-                } else {
-                    // mobile: keep collapsed initially
-                    calendlyContainerOuter.classList.add('collapsed');
+            // ----------------------------
+            // Lazy image loader (robusto)
+            // ----------------------------
+            (function robustLazyLoader() {
+                const lazyImgs = Array.from(document.querySelectorAll('img.lazy'));
+                if (!lazyImgs.length) return;
+                const PLACEHOLDER = 'assets/hero-bg.jpg';
+                function loadImg(img) {
+                    if (!img) return; if (!img.dataset || !img.dataset.src) return;
+                    img.onerror = function () {
+                        console.warn('Error cargando imagen:', img.dataset.src);
+                        if (img.getAttribute('data-placeholder-used')) return;
+                        img.src = PLACEHOLDER; img.setAttribute('data-placeholder-used', '1'); img.classList.add('loaded');
+                    };
+                    if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+                    img.src = img.dataset.src; img.removeAttribute('data-src'); img.classList.add('loaded');
                 }
-            }, 300);
-        });
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => { if (entry.isIntersecting) { loadImg(entry.target); obs.unobserve(entry.target); } });
+                    }, { rootMargin: '300px 0px', threshold: 0.01 });
 
-        // global message modal helpers
+                    lazyImgs.forEach(img => {
+                        const rect = img.getBoundingClientRect();
+                        if (rect.top < (window.innerHeight + 300)) { loadImg(img); } else { observer.observe(img); }
+                    });
+
+                    window.addEventListener('resize', () => {
+                        lazyImgs.forEach(img => {
+                            if (img.dataset && img.dataset.src) {
+                                const rect = img.getBoundingClientRect();
+                                if (rect.top < (window.innerHeight + 300)) { loadImg(img); try { observer.unobserve(img); } catch (_) { } }
+                            }
+                        });
+                    });
+                } else { lazyImgs.forEach(img => loadImg(img)); }
+            })();
+
+            // ----------------------------
+            // Calendly inline behavior
+            // ----------------------------
+            const calendlyInner = document.getElementById('calendly-inner');
+            const calendlyContainer = document.getElementById('calendly-container');
+            const toggleBtn = document.getElementById('toggle-calendly-inline');
+            const popupBtn = document.getElementById('open-calendly-popup');
+
+            function getPrefillFromForm() {
+                return {
+                    name: document.getElementById('contacto-nombre')?.value || '',
+                    telefono: document.getElementById('contacto-telefono')?.value || '',
+                    sucursal: document.getElementById('contacto-cultivo')?.value || '',
+                    fecha: ''
+                };
+            }
+
+            function buildCalendlyInlineUrl(base, prefill = {}) {
+                const params = new URLSearchParams();
+                params.set('embed_domain', window.location.hostname);
+                params.set('embed_type', 'Inline');
+                if (prefill.name) params.set('name', prefill.name);
+                if (prefill.email) params.set('email', prefill.email);
+                if (prefill.sucursal) params.set('a1', prefill.sucursal);
+                if (prefill.fecha) params.set('a2', prefill.fecha);
+                if (prefill.telefono) params.set('a3', prefill.telefono);
+                return base + (base.includes('?') ? '&' : '?') + params.toString();
+            }
+
+            function renderCalendlyInline(prefill = {}) {
+                if (!calendlyInner) return;
+                const existing = calendlyInner.querySelector('iframe');
+                const url = buildCalendlyInlineUrl(CALENDLY_URL, prefill);
+                if (existing) { if (existing.src !== url) existing.src = url; return; }
+                const iframe = document.createElement('iframe');
+                iframe.setAttribute('title', 'Calendario de Agronoré');
+                iframe.setAttribute('src', url);
+                iframe.setAttribute('frameborder', '0');
+                iframe.style.width = '100%';
+                iframe.style.minHeight = '640px';
+                iframe.style.borderRadius = '0.5rem';
+                iframe.allow = 'clipboard-write; microphone; camera; autoplay; encrypted-media';
+                calendlyInner.appendChild(iframe);
+            }
+
+            function setupInitialCalendlyState() {
+                const isMobile = window.innerWidth < 768;
+                if (!calendlyContainer) return;
+                if (isMobile) {
+                    calendlyContainer.classList.add('calendly-collapsed'); calendlyContainer.classList.remove('calendly-expanded');
+                } else {
+                    calendlyContainer.classList.remove('calendly-collapsed'); calendlyContainer.classList.add('calendly-expanded');
+                }
+                renderCalendlyInline(getPrefillFromForm());
+            }
+
+            setupInitialCalendlyState();
+            window.addEventListener('resize', () => { clearTimeout(window._calResizeTimeout); window._calResizeTimeout = setTimeout(setupInitialCalendlyState, 250); });
+
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!calendlyContainer) return;
+                    const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+                    const prefill = getPrefillFromForm();
+                    renderCalendlyInline(prefill);
+                    if (expanded) {
+                        calendlyContainer.classList.add('calendly-collapsed'); calendlyContainer.classList.remove('calendly-expanded');
+                        toggleBtn.setAttribute('aria-expanded', 'false'); toggleBtn.textContent = 'Abrir calendario'; document.body.style.overflow = 'auto';
+                    } else {
+                        calendlyContainer.classList.remove('calendly-collapsed'); calendlyContainer.classList.add('calendly-expanded');
+                        toggleBtn.setAttribute('aria-expanded', 'true'); toggleBtn.textContent = 'Cerrar calendario';
+                        setTimeout(() => { calendlyContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+                    }
+                });
+            }
+
+            if (popupBtn) {
+                popupBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const prefill = getPrefillFromForm();
+                    const url = buildCalendlyInlineUrl(CALENDLY_URL, prefill);
+                    if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+                        window.Calendly.initPopupWidget({ url });
+                    } else {
+                        window.open(url, '_blank', 'noopener');
+                    }
+                });
+            }
+
+            // Listen for Calendly postMessage events (auto-close on event scheduled)
+            window.addEventListener('message', function (e) {
+                try {
+                    const origin = String(e.origin || '');
+                    if (!origin.includes('calendly')) return;
+                    const data = e.data || {};
+                    const eventName = data.event;
+                    if (eventName === 'calendly.event_scheduled') {
+                        if (calendlyContainer) {
+                            calendlyContainer.classList.add('calendly-closing'); calendlyContainer.classList.add('calendly-collapsed'); calendlyContainer.classList.remove('calendly-expanded');
+                        }
+                        showMessageModal('¡Cita confirmada! Redirigiendo al comprobante...', 'Cita confirmada');
+                        setTimeout(() => { closeMessageModal(); window.location.href = '/gracias'; }, 900);
+                    }
+                } catch (err) { console.warn('Calendly message handler error', err); }
+            }, false);
+
+            // --- Defensas para evitar inicializaciones dobles de widgets externos ---
+            // Ada guard
+            if (window.Ada && !window.__ada_started) {
+                try { if (typeof window.Ada.start === 'function') { window.Ada.start(); window.__ada_started = true; } } catch (err) { console.warn('Ada start safe guard failed', err); }
+            }
+            // Ketch (consent manager) guard: garantizar 'purposes' mínimo
+            if (window.Ketch && !window.__ketch_init_done) {
+                try { if (typeof window.Ketch.init === 'function') { window.Ketch.init({ purposes: ['analytics', 'functional', 'marketing'] }); } window.__ketch_init_done = true; } catch (err) { console.warn('Ketch init guard failed', err); }
+            }
+        }); // DOMContentLoaded end
+
+        // Message modal helpers (global)
         function showMessageModal(message, title = 'Aviso') {
             const msgModal = document.getElementById('messageModal');
             if (msgModal) {
@@ -1491,34 +1387,47 @@
         }
         function closeMessageModal() {
             const msgModal = document.getElementById('messageModal');
-            if (msgModal) {
-                msgModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
+            if (msgModal) { msgModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
         }
 
         /***********************************************************************
-         * CARGA DIRECTA DE GOOGLE MAPS (TU KEY QUEDÓ IGUAL)
+         * CARGA SEGURA DE GOOGLE MAPS (NO EXPONER LA KEY EN EL HTML)
+         * - Este bloque solicita la key a /maps-key y luego inyecta el script.
+         * - Implementa /maps-key en tu servidor (ejemplo de server.js más abajo si quieres).
          ***********************************************************************/
-        (function loadMapsDirectly() {
-            const KEY = 'AIzaSyDoMYJbBKb1J9sOPTWJTyAaTuX5jBZJLtM';
-            if (!KEY || KEY === '') {
-                console.error('No API key proporcionada para Google Maps.');
-                const me = document.getElementById('map-error');
-                if (me) me.style.display = 'block';
-                return;
-            }
-            const s = document.createElement('script');
-            s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(KEY)}&callback=initMap&v=weekly`;
-            s.async = true;
-            s.defer = true;
-            s.onerror = function (e) {
-                console.error('Error al cargar la librería de Google Maps', e);
-                const me = document.getElementById('map-error');
-                if (me) me.style.display = 'block';
-            };
-            document.head.appendChild(s);
+        (function loadMapsSecurely() {
+            fetch('/maps-key', { method: 'GET', credentials: 'same-origin' })
+                .then(async (res) => {
+                    if (!res.ok) throw new Error('No se pudo obtener /maps-key: ' + res.status);
+                    const contentType = res.headers.get('content-type') || '';
+                    if (contentType.includes('application/json')) {
+                        const obj = await res.json();
+                        return (obj && obj.key) ? obj.key : '';
+                    } else {
+                        return (await res.text()).trim();
+                    }
+                })
+                .then(key => {
+                    if (!key) throw new Error('Clave Maps vacía. Asegúrate de que /maps-key devuelva la key.');
+                    const s = document.createElement('script');
+                    s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&callback=initMap&v=weekly&libraries=places`;
+                    s.async = true; s.defer = true;
+                    s.onerror = function (e) {
+                        console.error('Error al cargar la librería de Google Maps', e);
+                        const me = document.getElementById('map-error'); if (me) me.style.display = 'block';
+                    };
+                    document.head.appendChild(s);
+                })
+                .catch(err => {
+                    console.error('No se pudo cargar Maps de forma segura:', err);
+                    const me = document.getElementById('map-error');
+                    if (me) { me.style.display = 'block'; me.innerHTML += `<div style="margin-top:8px;color:#444">Detalle técnico: ${String(err)}</div>`; }
+                });
         })();
+
+        // Recomendación: reemplazar 'unload' por 'pagehide' o 'visibilitychange' si alguna librería provoca el warning
+        // Ejemplo:
+        // window.addEventListener('pagehide', () => { /* tareas de limpieza */ });
     </script>
 </body>
 

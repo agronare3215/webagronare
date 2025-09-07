@@ -1,0 +1,123 @@
+*** Begin Patch
+*** Add File: server.js
++const express = require('express');
++const path = require('path');
++const fs = require('fs');
++
++const app = express();
++const PORT = process.env.PORT || 3000;
++
++// Determina carpeta estática (prioriza /public si existe)
++const publicDir = fs.existsSync(path.join(__dirname, 'public')) ? path.join(__dirname, 'public') : path.join(__dirname);
++
++// Healthcheck
++app.get('/_health', (req, res) => res.json({ status: 'ok' }));
++
++/**
++ * /maps-key
++ * Devuelve JSON { key: "..." } con la API key tomada de process.env.MAPS_KEY
++ * Opciones de seguridad:
++ *  - Si MAPS_KEY_SECRET está fijado, el cliente debe enviar header "x-maps-key-secret" con ese valor.
++ *  - Si MAPS_KEY_ALLOWED_HOSTS está fijado (csv), revisa el referer u origin para que empiece con uno de esos hosts.
++ */
++app.get('/maps-key', (req, res) => {
++  const key = process.env.MAPS_KEY || '';
++  if (!key) return res.status(500).json({ error: 'MAPS_KEY no configurada en el servidor' });
++
++  // Si existe MAPS_KEY_SECRET, requerimos header
++  const secret = process.env.MAPS_KEY_SECRET;
++  if (secret && req.get('x-maps-key-secret') !== secret) {
++    return res.status(403).json({ error: 'Forbidden' });
++  }
++
++  // Alternativa: restricción por hosts permitidos (lista CSV)
++  const allowedCsv = process.env.MAPS_KEY_ALLOWED_HOSTS || '';
++  if (allowedCsv) {
++    const allowed = allowedCsv.split(',').map(s => s.trim()).filter(Boolean);
++    const referer = (req.get('referer') || req.get('origin') || '').toLowerCase();
++    const ok = allowed.some(h => referer.includes(h.toLowerCase()));
++    if (!ok) return res.status(403).json({ error: 'Host no permitido' });
++  }
++
++  // Responder con JSON mínimo
++  res.json({ key });
++});
++
++// Servir archivos estáticos
++app.use(express.static(publicDir, { index: 'index.html', maxAge: '1d' }));
++
++// SPA fallback -> index.html
++app.get('*', (req, res) => {
++  const indexPath = path.join(publicDir, 'index.html');
++  if (fs.existsSync(indexPath)) {
++    res.sendFile(indexPath);
++  } else {
++    res.status(404).send('Not found');
++  }
++});
++
++app.listen(PORT, () => {
++  console.log(`Server listening on port ${PORT}`);
++  console.log(`Serving static from: ${publicDir}`);
++});
++
+*** End Patch
+*** Begin Patch
+*** Add File: package.json
++{
++  "name": "agronore-server",
++  "version": "1.0.0",
++  "private": true,
++  "main": "server.js",
++  "scripts": {
++    "start": "node server.js"
++  },
++  "dependencies": {
++    "express": "^4.18.2"
++  }
++}
++
+*** End Patch
+*** Begin Patch
+*** Add File: Dockerfile
++FROM node:20-alpine
++
++WORKDIR /app
++
++# Copies package.json first for faster layer caching
++COPY package.json ./
++
++# Install only production dependencies
++RUN npm install --production
++
++# Copy rest of the repo (including public/)
++COPY . .
++
++ENV NODE_ENV=production
++EXPOSE 3000
++
++CMD ["node", "server.js"]
++
+*** End Patch
+*** Begin Patch
+*** Add File: .dockerignore
++node_modules
++npm-debug.log
++.git
++.gitignore
++.env
++*.log
++
+*** End Patch
+*** Begin Patch
+*** Add File: .env.example
++# Google Maps API key (no la pongas en el repo, usa secrets/env vars en tu hosting)
++MAPS_KEY=YOUR_GOOGLE_MAPS_API_KEY_HERE
++
++# Opcional: si lo defines, el cliente debe enviar header "x-maps-key-secret" con este valor para obtener la key
++MAPS_KEY_SECRET=
++
++# Opcional: lista CSV de hosts permitidos en referer/origin. Ej: agronare.com,localhost
++MAPS_KEY_ALLOWED_HOSTS=
++
+*** End Patch
