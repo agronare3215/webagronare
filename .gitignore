@@ -1,34 +1,10 @@
-# environment
 .env
 .env.local
-.env.*.local
-
-# node
 node_modules/
 dist/
 build/
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# backups / archive
 *.bak
-*.bak2
-archive/
-dev/patches/
-
-# patches
 *.patch
-
-# OS
-.DS_Store
-Thumbs.db
-
-# editor
+archive/
 .vscode/
-.idea/
-
-# system
-.swp
+.DS_Store
