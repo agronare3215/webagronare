@@ -1,0 +1,28 @@
+{
+  "name": "webagronare",
+  "version": "1.0.0",
+  "description": "Repositorio para el sitio web de Agronoré.",
+  "main": "generate_pdf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agronare3215/webagronare.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/agronare3215/webagronare/issues"
+  },
+  "homepage": "https://github.com/agronare3215/webagronare#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
