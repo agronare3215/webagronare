@@ -164,6 +164,23 @@
       border-color: #16a34a;
     }
 
+    .hero-form-input {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #1f2937;
+      /* Dark gray text */
+    }
+
+    .hero-form-input::placeholder {
+      color: #6b7280;
+      /* Medium gray placeholder text */
+    }
+
+    .hero-form-input option {
+      color: #1f2937;
+      /* Ensure dropdown options are dark */
+    }
+
+
     .whatsapp-float {
       animation: pulse 2s infinite;
     }
@@ -331,9 +348,9 @@
           <form id="hero-lead" class="grid sm:grid-cols-3 gap-3 mb-6" action="https://formspree.io/f/mzzakqk"
             method="POST">
             <input name="nombre" required placeholder="Nombre"
-              class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1 sm:col-span-1">
+              class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1 sm:col-span-1 hero-form-input">
             <select id="hero-cultivo" name="cultivo" aria-label="Cultivo"
-              class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1 sm:col-span-1"
+              class="px-4 py-3 rounded-md border border-transparent focus:outline-none input-focus col-span-1 sm:col-span-1 hero-form-input"
               required>
               <option value="">Cultivo</option>
               <option value="berries">Berries</option>
@@ -1082,7 +1099,7 @@
         document.body.style.overflow = 'auto';
       };
 
-      // Gemini suggester UI (kept simple)
+      // Gemini API Integration
       const geminiBtn = document.getElementById('gemini-suggester-btn');
       const cropInput = document.getElementById('contacto-cultivo');
       const messageInput = document.getElementById('contacto-mensaje');
@@ -1090,24 +1107,48 @@
       const geminiResponseText = document.getElementById('gemini-response-text');
       const geminiLoader = document.getElementById('gemini-loader');
 
-      // Nota: NO colocar la API key de Gemini en el cliente.
-      const geminiProxyUrl = '/generate-suggestion'; // tu servidor debe exponerlo (recomendado)
+      async function callGeminiApi(userQuery, systemPrompt, retries = 3, delay = 1000) {
+        const apiKey = ""; // Provided by the environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
-      async function fetchWithRetry(url, options, retries = 3) {
+        const payload = {
+          contents: [{ parts: [{ text: userQuery }] }],
+          systemInstruction: {
+            parts: [{ text: systemPrompt }]
+          },
+        };
+
         for (let i = 0; i < retries; i++) {
           try {
-            const response = await fetch(url, options);
-            if (response.ok) { return response; }
-            else if (response.status === 429) {
-              const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-              await new Promise(resolve => setTimeout(resolve, delay));
-            } else { throw new Error(`HTTP error! status: ${response.status}`); }
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+              const result = await response.json();
+              const candidate = result.candidates?.[0];
+              if (candidate && candidate.content?.parts?.[0]?.text) {
+                return candidate.content.parts[0].text;
+              } else {
+                throw new Error('Respuesta inválida de la API de Gemini.');
+              }
+            } else if (response.status === 429) {
+              // Throttling, wait and retry
+              console.log(`Throttled. Retrying in ${delay * Math.pow(2, i)}ms`);
+              await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+            } else {
+              throw new Error(`Error de la API: ${response.status}`);
+            }
           } catch (error) {
+            console.error(`Intento ${i + 1} fallido:`, error);
             if (i === retries - 1) throw error;
-            const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-            await new Promise(resolve => setTimeout(resolve, delay));
+            console.log(`Retrying in ${delay * Math.pow(2, i)}ms`);
+            await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
           }
         }
+        throw new Error('No se pudo obtener una respuesta después de varios reintentos.');
       }
 
       if (geminiBtn) {
@@ -1121,37 +1162,25 @@
           }
 
           geminiBtn.disabled = true;
-          geminiBtn.classList.add('opacity-50');
+          geminiBtn.classList.add('opacity-50', 'cursor-not-allowed');
           geminiResponseContainer.classList.remove('hidden');
           geminiLoader.classList.remove('hidden');
           geminiResponseText.textContent = '';
-          geminiResponseContainer.scrollIntoView({ behavior: 'smooth' });
+          geminiResponseContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-          const systemPrompt = "Actúa como un agrónomo experto. Tu objetivo es proporcionar un diagnóstico profesional y una sugerencia de acción inicial para un agricultor, basado en el cultivo y el problema que describe. La respuesta debe ser concisa, en un solo párrafo, y enfocada en soluciones. No te excedas en el texto. La sugerencia debe ser profesional y realista.";
-          const userQuery = `Problema con el cultivo de ${cultivo}: "${mensaje}"`;
-
-          const payload = { prompt: userQuery, system: systemPrompt, temperature: 0.4 };
+          const systemPrompt = "Actúa como un agrónomo experto y asesor de Agronoré. Tu objetivo es proporcionar un diagnóstico profesional y una sugerencia de acción inicial para un agricultor en México, basado en el cultivo y el problema que describe. La respuesta debe ser concisa (2-3 frases), útil y amigable. Termina siempre recomendando contactar al equipo de Agronoré para un diagnóstico completo y personalizado. No uses markdown.";
+          const userQuery = `Mi cultivo es de ${cultivo} y mi problema es: "${mensaje}"`;
 
           try {
-            const response = await fetchWithRetry(geminiProxyUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-            });
-
-            if (!response) throw new Error("Fallo en la conexión después de múltiples reintentos.");
-            const result = await response.json();
-            const aiText = result?.text || result?.suggestion || null;
-
-            if (aiText) geminiResponseText.textContent = aiText;
-            else geminiResponseText.textContent = 'Lo sentimos, no pudimos generar una sugerencia. Por favor, intenta de nuevo más tarde.';
+            const aiText = await callGeminiApi(userQuery, systemPrompt);
+            geminiResponseText.textContent = aiText;
           } catch (error) {
-            console.error('Error fetching from Gemini proxy:', error);
-            geminiResponseText.textContent = 'Ocurrió un error al conectar con el asistente. Por favor, revisa tu conexión a internet e inténtalo de nuevo.';
+            console.error('Error al llamar a la API de Gemini:', error);
+            geminiResponseText.textContent = 'Ocurrió un error al conectar con nuestro asistente de IA. Por favor, inténtalo de nuevo más tarde o contáctanos directamente.';
           } finally {
             geminiLoader.classList.add('hidden');
             geminiBtn.disabled = false;
-            geminiBtn.classList.remove('opacity-50');
+            geminiBtn.classList.remove('opacity-50', 'cursor-not-allowed');
           }
         });
       }
