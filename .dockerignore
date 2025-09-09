@@ -1,8 +1,0 @@
-node_modules
-comprobantes
-.env
-*.log
-.vscode
-.git
-.gitignore
-README.md

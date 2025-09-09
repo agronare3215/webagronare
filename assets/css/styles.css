@@ -1,99 +1,257 @@
-/* ---------- estilos movidos desde gracias.html / index.html ---------- */
-:root { --green:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#163252; }
-* { box-sizing: border-box; }
-body { font-family: 'Poppins', sans-serif; margin:0; background: linear-gradient(180deg,#f7fdf8 0%,var(--bg) 100%); color:var(--text); -webkit-font-smoothing:antialiased; }
+/* ===== Versión ULTRA agresiva: contraste máximo para hero en móviles ===== */
+@media (max-width: 767px) {
 
-.wrap{max-width:980px;margin:48px auto;padding:24px;}
-.card{background:var(--card);border-radius:14px;box-shadow:0 8px 24px rgba(9,10,10,0.06);overflow:hidden;display:flex;flex-direction:column;gap:18px;transition:transform .45s cubic-bezier(.2,.9,.2,1),opacity .45s;}
-.intro{padding:32px 36px;border-bottom:1px solid #eef2f4;display:flex;gap:20px;align-items:center;}
-.logo{width:72px;height:72px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(22,163,74,0.12), rgba(34,197,94,0.06));}
-.logo img{width:64px;}
-.title{flex:1;}
-.title h1{margin:0;font-size:22px;}
-.title p{margin:6px 0 0;color:#58616b;}
-.content{display:grid;grid-template-columns:1fr 360px;gap:20px;padding:22px;}
-.left{min-height:420px;}
-.pdf-frame{width:100%;height:420px;border-radius:10px;border:1px solid #e6eef0;overflow:hidden;background:#fafafa;display:flex;align-items:center;justify-content:center;}
-.pdf-frame iframe{width:100%;height:100%;border:0;}
-.meta{padding:18px;border-radius:10px;background:linear-gradient(180deg,#fff,#fcfff9);box-shadow:0 6px 18px rgba(18,44,30,0.03);}
-.meta h3{margin:0 0 6px;font-size:16px;}
-.meta p{margin:0;color:#466a4a;font-size:14px;}
-.row{display:flex;gap:10px;align-items:center;margin-top:12px;}
-.btn{display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer;}
-.btn-green{background:var(--green);color:#fff;}
-.btn-outline{background:transparent;border:1px solid #dbe8de;color:var(--text);}
-.small{font-size:13px;color:#6b7280;}
-.fade-in{opacity:0;transform:translateY(8px) scale(.995);animation:enter .6s forwards .12s;}
-@keyframes enter{to{opacity:1;transform:none;}}
-@media (max-width:900px){ .content{grid-template-columns:1fr;} .pdf-frame{height:320px;} .card{border-radius:12px;} .logo{display:none;} }
+    /* Base: asegurar stacking y recorte */
+    .hero-section {
+        position: relative !important;
+        overflow: hidden !important;
+    }
 
-.pdf-fallback{ text-align:center; padding:18px; color:#8b9498; }
-.button-row{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
-.btn-volver{ margin-left:auto; background:#f3f4f6; border-radius:10px; padding:10px 14px; }
-.icon-box{ width:44px; height:44px; border-radius:8px; background:#eefaf0; display:flex; align-items:center; justify-content:center; }
-.mt-14{ margin-top:14px; }
-.small-mt{ margin-top:12px; color:#6b7280; }
+    /* Overlay extremadamente oscuro */
+    .hero-section::before {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 2 !important;
+        pointer-events: none !important;
+        background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0.96) 0%,
+                rgba(0, 0, 0, 0.95) 36%,
+                rgba(0, 0, 0, 0.94) 100%) !important;
+    }
 
-/* Small helpers for map infowindow moved styles (index.html) */
-.infowindow { min-width:220px; font-family:inherit; color:#222; }
-.infowindow-title { margin:0 0 6px 0; font-size:16px; font-weight:600; }
-.infowindow-address { font-size:14px; color:#444; }
-.infowindow-actions { margin-top:8px; }
-.is-14d7df8e {
-  text-align:center;
-  padding:18px;
-  color:#8b9498;
+    /* Forzar que el contenido quede por encima del overlay */
+    .hero-section>.container,
+    .hero-section .max-w-3xl,
+    .hero-section .animate-on-scroll {
+        position: relative !important;
+        z-index: 3 !important;
+    }
+
+    /* Blur fuerte para "desenfocar" el detalle del fondo */
+    .hero-section {
+        -webkit-backdrop-filter: blur(4px) contrast(0.9) saturate(0.9) !important;
+        backdrop-filter: blur(4px) contrast(0.9) saturate(0.9) !important;
+        filter: brightness(0.92) contrast(0.95) !important;
+    }
+
+    /* TITULO: sombra muy marcada y color blanco puro */
+    #hero-title {
+        color: #ffffff !important;
+        text-shadow:
+            0 30px 68px rgba(0, 0, 0, 0.94),
+            0 8px 18px rgba(0, 0, 0, 0.7) !important;
+        line-height: 1.0 !important;
+        letter-spacing: -0.01em !important;
+        font-size: clamp(1.8rem, 7.0vw, 2.4rem) !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+
+    /* SUBTEXTO: también sombra fuerte */
+    .hero-section p {
+        color: #f8fafc !important;
+        text-shadow: 0 14px 36px rgba(0, 0, 0, 0.82) !important;
+    }
+
+    /* BADGE: claro sobre fondo oscuro */
+    .hero-section .badge {
+        background: rgba(255, 255, 255, 0.03) !important;
+        color: #eafbf0 !important;
+        text-shadow: 0 8px 22px rgba(0, 0, 0, 0.75) !important;
+        border: 1px solid rgba(255, 255, 255, 0.02) !important;
+    }
+
+    /* INPUTS/SELECTS/BOTONES: fondo casi blanco y sombra profunda para separación */
+    .hero-section input,
+    .hero-section select,
+    .hero-section button,
+    #hero-lead input,
+    #hero-lead select {
+        background: rgba(255, 255, 255, 0.995) !important;
+        color: #041022 !important;
+        border-radius: 0.6rem !important;
+        border: 1px solid rgba(2, 6, 23, 0.06) !important;
+        box-shadow: 0 18px 48px rgba(2, 6, 23, 0.42) !important;
+    }
+
+    /* Focus accesible y muy visible */
+    .hero-section input:focus,
+    .hero-section select:focus,
+    .hero-section button:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.28) !important;
+        border-color: rgba(34, 197, 94, 0.95) !important;
+    }
+
+    /* BOTON primario: mucho más oscuro y con efecto "levantar" */
+    .hero-section .bg-secondary-500,
+    .hero-section button[type="submit"] {
+        background-color: #4a1800 !important;
+        /* naranja-marrón muy oscuro */
+        color: #ffffff !important;
+        box-shadow: 0 20px 70px rgba(74, 24, 0, 0.36) !important;
+        border: none !important;
+        transform: translateZ(0);
+    }
+
+    .hero-section .bg-secondary-500:hover,
+    .hero-section button[type="submit"]:hover {
+        filter: brightness(1.06) !important;
+        transform: translateY(-3px) !important;
+    }
+
+    /* Reducir riesgo de ruptura de líneas en H1 */
+    .hero-section .max-w-3xl {
+        max-width: 720px !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Evitar que imágenes/lazy traigan brillo extra */
+    .hero-section img,
+    .hero-section .lazy {
+        -webkit-filter: brightness(0.88) contrast(0.92) !important;
+        filter: brightness(0.88) contrast(0.92) !important;
+    }
+
+    /* Microform: separación práctica para elementos táctiles */
+    #hero-lead {
+        gap: .5rem !important;
+    }
+
+    #hero-lead input,
+    #hero-lead select {
+        min-height: 48px !important;
+        font-size: 15px !important;
+    }
+
+    /* Texto pequeño / enlaces: forzar color claro */
+    .hero-section a,
+    .hero-section .text-sm {
+        color: #eafbf0 !important;
+        text-shadow: 0 8px 22px rgba(0, 0, 0, 0.78) !important;
+    }
 }
 
-.is-5ecc467a {
-  margin-left:auto;
-  background:#f3f4f6;
-  border-radius:10px;
-}
+/* ===== Ajustes extra para móviles muy pequeños (<= 480px) ===== */
+@media (max-width: 480px) {
+    .hero-section {
+        position: relative !important;
+        overflow: hidden !important;
+    }
 
-.is-1d51a70e {
-  width:44px;
-  height:44px;
-  border-radius:8px;
-  background:#eefaf0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+    /* Overlay aún más oscuro y uniforme para garantizar contraste extremo */
+    .hero-section::before {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 4 !important;
+        pointer-events: none !important;
+        background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0.985) 0%,
+                rgba(0, 0, 0, 0.98) 40%,
+                rgba(0, 0, 0, 0.975) 100%) !important;
+    }
 
-.is-34a3dde6 {
-  margin-top:12px;
-  color:#6b7280;
-}
+    /* Blur fuerte y reducción de detalle */
+    .hero-section {
+        -webkit-backdrop-filter: blur(5px) contrast(0.88) !important;
+        backdrop-filter: blur(5px) contrast(0.88) !important;
+        filter: brightness(0.88) !important;
+    }
 
-.is-c8be1ccb {
-  display:none;
-}
+    /* Contenido por encima del overlay */
+    .hero-section>.container,
+    .hero-section .max-w-3xl,
+    .hero-section .animate-on-scroll {
+        position: relative !important;
+        z-index: 5 !important;
+    }
 
-.is-cad980f4 {
-  width:100%;
-}
+    /* TITULO: tamaño reducido para evitar wraps, sombra máxima */
+    #hero-title {
+        font-size: 1.9rem !important;
+        line-height: 1.02 !important;
+        color: #ffffff !important;
+        text-shadow:
+            0 36px 82px rgba(0, 0, 0, 0.96),
+            0 10px 24px rgba(0, 0, 0, 0.75) !important;
+        letter-spacing: -0.02em !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
 
-.is-1576afc6 {
-  min-width:220px;
-}
+    /* Subtexto compacto */
+    .hero-section p {
+        font-size: 14px !important;
+        color: #f9fbfa !important;
+        text-shadow: 0 14px 36px rgba(0, 0, 0, 0.85) !important;
+        margin-bottom: 10px !important;
+    }
 
-.is-02cc08d4 {
-  margin:0 0 6px 0;
-  font-size:16px;
-}
+    /* Micro-form: inputs más altos y botón prominente */
+    #hero-lead {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: .4rem !important;
+    }
 
-.is-0ea25e0e {
-  font-size:14px;
-  color:#444;
-}
+    #hero-lead input,
+    #hero-lead select {
+        min-height: 50px !important;
+        font-size: 15px !important;
+        padding: .6rem .8rem !important;
+    }
 
-.is-b1ecc496 {
-  margin-top:8px;
-}
+    #hero-lead button {
+        grid-column: 1 / -1;
+        padding: .7rem 1rem !important;
+        font-size: 16px !important;
+        border-radius: .6rem !important;
+    }
 
-.is-2e3e6c78 {
-  margin-top:8px;
-  color:#444;
-}
+    /* Inputs y botones: separación profunda para toque */
+    .hero-section input,
+    .hero-section select,
+    .hero-section button {
+        box-shadow: 0 22px 60px rgba(2, 6, 23, 0.48) !important;
+        background: rgba(255, 255, 255, 0.995) !important;
+        color: #041022 !important;
+    }
 
+    /* Botón primario: más alto, ancho completo, sombra mayor */
+    .hero-section button[type="submit"],
+    .hero-section .bg-secondary-500 {
+        width: 100% !important;
+        display: block !important;
+        background-color: #321200 !important;
+        box-shadow: 0 28px 90px rgba(50, 18, 0, 0.44) !important;
+        padding: .85rem 1rem !important;
+    }
+
+    /* Badge más discreta pero legible */
+    .hero-section .badge {
+        font-size: 12px !important;
+        padding: .22rem .5rem !important;
+    }
+
+    /* Forzar enlaces y texto pequeños a color claro */
+    .hero-section a,
+    .hero-section .text-sm {
+        color: #eafbf0 !important;
+        text-shadow: 0 10px 28px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    /* Evitar que imágenes aumenten brillo */
+    .hero-section img,
+    .hero-section .lazy {
+        filter: brightness(0.82) contrast(0.9) !important;
+    }
+
+    /* Ajustes de accesibilidad: mayor foco táctil */
+    #hero-lead input:focus,
+    #hero-lead select:focus,
+    #hero-lead button:focus {
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.3) !important;
+    }
+}

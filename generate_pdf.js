@@ -1,19 +1,17 @@
-// generate_pdf.js
+// generate_pdf.js (colocar en la raíz)
 const puppeteer = require('puppeteer');
 
 module.exports = async function generatePdf(html, options = {}) {
-    // options: puppeteer launch options could be passed via env (for serverless)
     const launchOptions = {
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
         ...(process.env.PUPPETEER_EXECUTABLE_PATH ? { executablePath: process.env.PUPPETEER_EXECUTABLE_PATH } : {})
     };
 
     const browser = await puppeteer.launch(launchOptions);
     try {
         const page = await browser.newPage();
-        // set a default viewport (optional)
-        await page.setViewport({ width: 1200, height: 800 });
-        // set content
+        await page.setViewport({ width: options.width || 1200, height: options.height || 800 });
         await page.setContent(html, { waitUntil: ['networkidle0'] });
         const pdfBuffer = await page.pdf({
             format: options.format || 'A4',
@@ -22,7 +20,10 @@ module.exports = async function generatePdf(html, options = {}) {
             preferCSSPageSize: true
         });
         return pdfBuffer;
+    } catch (err) {
+        console.error('generatePdf error:', err);
+        throw err;
     } finally {
-        try { await browser.close(); } catch (e) { /* ignore */ }
+        try { await browser.close(); } catch (e) { /* ignore close error */ }
     }
 };
